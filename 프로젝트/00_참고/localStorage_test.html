@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+
+    <title>인사관리시스템_format</title>
+
+    <!--부트스트랩 필수 1-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <!--폰트 noto sans 적용 CSS-->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+        * {
+            font-family: 'Noto Sans:ital';
+            font-weight: 400;
+            max-width: 800px;
+            margin: 0 auto;
+            /* border: 1px red solid; */
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        #wrap {
+            width: 100%;
+            max-width: 1280px;
+            background-color: #ffffff;
+            padding: 35px 30px;
+            border-radius: 20px;
+            box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
+            margin: 10px auto;
+        }
+
+        .menubutton {
+            height: 50px;
+            margin: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 1280px;
+            background-color: #ffffff;
+            padding: 20px 20px;
+            border-radius: 20px;
+            box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap"> <!--wrap-->
+        <div id="header" class="container text-center"> <!--header-->
+            <div class="row">
+                <img id="attndancelogo" class="col-3" src="_img/attendance_logo.webp">
+                <div id="menuBar" class=" col-9 container row">
+                    <a href="" role="button" class="btn btn-outline-dark col menubutton">사원관리</a>
+                    <a href="" role="button" class="btn btn-outline-dark col menubutton">근태이력</a>
+                    <a href="" role="button" class="btn btn-outline-dark col menubutton">캘린더</a>
+                    <a href="" role="button" class="btn btn-outline-dark col menubutton">대시보드</a>
+                </div>
+            </div>
+        </div><!--header end-->
+
+        <div id="main" class="container"> <!--main-->
+            <div class="content"><!--content1-->
+                <h3>직급 변환 test</h3>
+                <input type="text" id="test1input">
+                <button onclick="changePositionName()">검색</button>
+                <h3 id="test1result">테스트 결과 </h3>
+            </div><!--content1 end-->
+            <div class="content"><!--content2-->
+                <h3>부서 변환 test</h3>
+                <input type="text" id="test2input">
+                <button onclick="changeDepartName()">검색</button>
+                <h3 id="test2result">테스트 결과 </h3>
+            </div><!--content2 end-->
+            <div class="content"><!--content3-->
+                <h3>멤버 변환 test</h3>
+                <input type="text" id="test3input">
+                <button onclick="changeMemberName()">검색</button>
+                <h3 id="test3result">테스트 결과 </h3>
+            </div><!--content3 end-->
+            <div class="content"><!--content4-->
+                <h3>멤버 변환 test</h3>
+                <input type="text" id="test4input">
+                <button onclick="changeMemberName()">검색</button>
+                <h3 id="test4result">테스트 결과 </h3>
+            </div><!--content2 end-->
+
+        </div><!--main end-->
+    </div> <!--wrap end-->
+
+    <script src="localStorage_table.js"></script>
+    <!-- 부트스트랩 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
