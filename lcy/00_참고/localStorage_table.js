@@ -1,3 +1,6 @@
+// 공통 table 및 공통 function 정의
+
+// 1. 직급 리스트 =======================================
 const positionList = [
     { posiID: 10000, posiName: "admin" },
     { posiID: 10001, posiName: "사장" },
@@ -9,16 +12,84 @@ const positionList = [
     { posiID: 10007, posiName: "대리" },
     { posiID: 10008, posiName: "주임" },
     { posiID: 10009, posiName: "사원" }
-]
+];
 
-const departmentList = [{ departID: 30000, departName: "admin" },
-{ departID: 30001, departName: "전략기획부" },
-{ departID: 30002, departName: "총무·경리부" },
-{ departID: 30003, departName: "생산부" },
-{ departID: 30004, departName: "영업부" },
-{ departID: 30005, departName: "개발부" }
-]
+// 1.1. get 직급 리스트 
+function getPositionList() {
+    let positionList = localStorage.getItem('positionList')
 
+    if (positionList == null) {
+        positionList = [];
+    } else {
+        positionList = JSON.parse(positionList);
+    };
+    return positionList;
+};
+
+// 1.2. set 직급 리스트
+function setProductsList(positionList) {
+    localStorage.setItem('positionList', JSON.stringify(positionList));
+};
+
+// 1.3. 직급id <-> 직급 이름 변환 함수
+function changePositionName() {
+    let input = document.querySelector("#test1input").value
+    let html = ``
+    for (let i = 0; i < positionList.length; i++) {
+        let position = positionList[i];
+        if (position.posiID == input) {
+            html += `${position.posiName}`
+        }
+        else if (position.posiName == input) {
+            html += `${position.posiID}`
+        };
+    };
+    document.querySelector('#test1result').innerHTML = html
+}; // 이걸 응용하라는 의미로 이걸 그대로 가져다 쓰면 당연히 에러남 -옹-
+
+// 2. 부서 리스트 =======================================
+const departmentList = [
+    { departID: 30000, departName: "admin" },
+    { departID: 30001, departName: "전략기획부" },
+    { departID: 30002, departName: "총무·경리부" },
+    { departID: 30003, departName: "생산부" },
+    { departID: 30004, departName: "영업부" },
+    { departID: 30005, departName: "개발부" }
+];
+
+// 2.1. get 부서 리스트 
+function getDepartmentList() {
+    let departmentList = localStorage.getItem('departmentList')
+    if (departmentList == null) {
+        departmentList = [];
+    } else {
+        departmentList = JSON.parse(departmentList);
+    };
+    return departmentList;
+};
+
+// 2.2. set 부서 리스트
+function setDepartmentList(departmentList) {
+    localStorage.setItem('departmentList', JSON.stringify(departmentList));
+};
+
+// 2.3. 부서id <-> 부서 이름 변환 함수
+function changeDepartName() {
+    let input = document.querySelector("#test2input").value
+    let html = ``
+    for (let i = 0; i < departmentList.length; i++) {
+        let department = departmentList[i];
+        if (department.departID == input) {
+            html += `${department.departName}`
+        }
+        else if (department.departName == input) {
+            html += `${department.departID}`
+        };
+    };
+    document.querySelector('#test2result').innerHTML = html
+}; // 이걸 응용하라는 의미로 이걸 그대로 가져다 쓰면 당연히 에러남 -옹-
+
+// 3. 휴일 리스트 =======================================
 const holidayList = [
     { holidayDate: '2025-05-05', week: 2, note: '어린이날' },
     { holidayDate: '2025-05-06', week: 3, note: '대체 휴일' },
@@ -31,8 +102,27 @@ const holidayList = [
     { holidayDate: '2025-10-08', week: 4, note: '대체 공휴일' },
     { holidayDate: '2025-10-09', week: 5, note: '한글날' },
     { holidayDate: '2025-12-25', week: 5, note: '성탄절' }
-]
+];
 
+// 3.1. get 휴일 리스트 
+function getHolidayList() {
+    let holidayList = localStorage.getItem('holidayList')
+
+    if (holidayList == null) {
+        holidayList = [];
+    } else {
+        holidayList = JSON.parse(holidayList);
+    };
+    return holidayList;
+};
+
+// 3.2. set 휴일 리스트
+function setHolidayList(holidayList) {
+    localStorage.setItem('holidayList', JSON.stringify(holidayList));
+};
+// 3.2. set 휴일 리스트
+
+// 4. 직원 리스트  =======================================
 const memberList = [
     { memberID: 50000, Name: 'admin', Birthday: '2020-03-01', Call: '010-0000-0000', Email: 'exam@example.com', posiID: 10050, departID: 30050, pwd: 'qwer1234' },
     { memberID: 50001, Name: '김지훈', Birthday: '1986-03-14', Call: '010-2453-6874', Email: 'jh.kim@example.com', posiID: 10003, departID: 30004, pwd: '50001a30004' },
@@ -52,7 +142,41 @@ const memberList = [
     { memberID: 50015, Name: '홍지민', Birthday: '1992-01-31', Call: '010-6128-3955', Email: 'jm.hong@example.com', posiID: 10006, departID: 30001, pwd: '50015a30001' }
 ]
 
+// 4.1. get 직원 리스트 
+function getMemberList() {
+    let memberList = localStorage.getItem('memberList')
 
+    if (memberList == null) {
+        memberList = [];
+    } else {
+        memberList = JSON.parse(memberList);
+    };
+    return memberList;
+};
+
+// 4.2. set 직원 리스트
+function setMemberList(memberList) {
+    localStorage.setItem('memberList', JSON.stringify(memberList));
+};
+
+// 4.3. 직원id <-> 직원 이름 변환 함수
+function changeMemberName() {
+    let input = document.querySelector("#test3input").value
+    let html = ``
+    for (let i = 0; i < memberList.length; i++) {
+        let member = memberList[i];
+        if (member.memberID == input) {
+            html += `${member.Name}`
+        }
+        else if (member.Name == input) {
+            html += `${member.memberID}`
+        };
+    };
+    document.querySelector('#test3result').innerHTML = html
+}; // 이걸 응용하라는 의미로 이걸 그대로 가져다 쓰면 당연히 에러남 -옹-
+
+
+// 5. 근태 리스트  =======================================
 const attendaceList = [
     { attendID: 100001, memberID: 50001, date: '2025-05-01', attentTime: '08:32', leaveTime: '18:19' },
     { attendID: 100002, memberID: 50002, date: '2025-05-01', attentTime: '08:32', leaveTime: '18:21' },
@@ -650,3 +774,21 @@ const attendaceList = [
     { attendID: 100594, memberID: 50014, date: '2025-06-30', attentTime: '08:52', leaveTime: '18:16' },
     { attendID: 100595, memberID: 50015, date: '2025-06-30', attentTime: '08:56', leaveTime: '18:36' }
 ]
+
+// 5.1. get 근태 리스트 
+function getAttendaceList() {
+    let attendaceList = localStorage.getItem('attendaceList')
+
+    if (attendaceList == null) {
+        attendaceList = [];
+    } else {
+        attendaceList = JSON.parse(attendaceList);
+    };
+    return attendaceList;
+};
+
+// 5.2. set 근태 리스트
+function setAttendaceList(attendaceList) {
+    localStorage.setItem('attendaceList', JSON.stringify(attendaceList));
+};
+
