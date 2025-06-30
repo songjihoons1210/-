@@ -15,21 +15,24 @@ let contentArray = [
 ];
 
 let cno = 5; // 일정 고유번호 시작값
-// 달력 
+// 달력 출근 지각 
 attenDance()
 function attenDance() {
-    // 1. 기존 contentArray에 서 공휴일(특별한 날) 날짜 추출
     let specialDays = contentArray
         .filter(plan => plan.color === 'red')
-        .map(plan => plan.date); // ['2025-6-6', '2025-6-3', ...]
+        .map(plan => plan.date);
 
-    // 2. 출근 추가
+    // 출근 추가
     for (let month = 1; month <= 12; month++) {
         let lastDate = new Date(2025, month, 0).getDate();
 
         for (let day = 1; day <= lastDate; day++) {
             let dateStr = `2025-${month}-${day}`;
-            if (!specialDays.includes(dateStr)) {
+            let dateObj = new Date(2025, month - 1, day);
+            let weekDay = dateObj.getDay(); // 0:일, 1:월, ..., 6:토
+
+            // 주말이 아니고, 공휴일이 아닌 경우만 출근 추가
+            if (!specialDays.includes(dateStr) && weekDay !== 0 && weekDay !== 6) {
                 contentArray.push({
                     cno: cno++,
                     content: `[출근]:`,
@@ -39,13 +42,17 @@ function attenDance() {
             }
         }
     }
-    // 3. 지각 추가
+
+    // 지각 추가 (출근과 동일한 조건)
     for (let month = 1; month <= 12; month++) {
         let lastDate = new Date(2025, month, 0).getDate();
 
         for (let day = 1; day <= lastDate; day++) {
             let dateStr = `2025-${month}-${day}`;
-            if (!specialDays.includes(dateStr)) {
+            let dateObj = new Date(2025, month - 1, day);
+            let weekDay = dateObj.getDay();
+
+            if (!specialDays.includes(dateStr) && weekDay !== 0 && weekDay !== 6) {
                 contentArray.push({
                     cno: cno++,
                     content: '[지각]:',
@@ -73,7 +80,7 @@ function calPrint() { // 함수의 매개변수 : X , 리턴값 : X
     html2 += `<div class="week sunday">일</div><div class="week" >월</div>
             <div class="week">화</div><div class="week">수</div>
             <div class="week">목</div><div class="week">금</div>
-            <div class="week">토</div>`;
+            <div class="week thuday">토</div>`;
 
     // - 1일 ~ 마지막 일까지 출력 
     // (1) 현재 날짜의 마지막 일 구하기, 달력은 1부터 마지막 일까지 출력하기 위해서 
