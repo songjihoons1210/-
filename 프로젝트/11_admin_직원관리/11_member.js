@@ -1,87 +1,100 @@
-const employees = [];
-let ecode = 50001;
+const employees = JSON.parse(localStorage.getItem('employees')) || [];
+let ecode = employees.length > 0 ? Math.max(...employees.map(e => Number(e.ecode))) + 1 : 50001;
+
+// 페이지 로드시 기존 데이터 출력
+window.addEventListener('DOMContentLoaded', () => {
+  employees.forEach(emp => renderRow(emp));
+});
 
 // 직원 등록 버튼 클릭 시 새로운 직원 추가
 const newMemberBtn = document.querySelector('.newmember');
 newMemberBtn.addEventListener('click', () => {
   const employee = {
     ecode: ecode++,
-    ename: '입력',
-    ebirth: '입력',
-    edept: '입력',
-    eposition: '입력',
-    ephone: '입력',
-    eemail: '입력'
+    ename: '이름',
+    ebirth: '생년월일',
+    edept: '부서',
+    eposition: '직급',
+    ephone: '연락처',
+    eemail: '이메일'
   };
   employees.push(employee);
+  saveToLocalStorage();
   renderRow(employee);
 });
 
-// 직원 한 명의 행 생성
-function renderRow(emp) {
-  const tbody = document.querySelector('tbody');
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td>${emp.ecode}</td>
-    <td>${emp.ename}</td>
-    <td>${emp.ebirth}</td>
-    <td>${emp.edept}</td>
-    <td>${emp.eposition}</td>
-    <td>${emp.ephone}</td>
-    <td>${emp.eemail}</td>
-    <td>
-      <button type="button" class="btn btn-primary btn-sm" onclick="editEmployee(${emp.ecode}, this)">수정</button>
-      <button type="button" class="btn btn-danger btn-sm" onclick="deleteEmployee(${emp.ecode}, this)">삭제</button>
-    </td>
-  `;
-  tbody.appendChild(tr);
+// 로컬스토리지 저장 함수
+function saveToLocalStorage() {
+  localStorage.setItem('employees', JSON.stringify(employees));
 }
+
+// 직원 한 명의 행 생성
+// function renderRow(emp) {
+//   const tbody = document.querySelector('tbody');
+//   const tr = document.createElement('tr');
+//   tr.innerHTML = `
+//     <td>${emp.ecode}</td>
+//     <td>${emp.ename}</td>
+//     <td>${emp.ebirth}</td>
+//     <td>${emp.edept}</td>
+//     <td>${emp.eposition}</td>
+//     <td>${emp.ephone}</td>
+//     <td>${emp.eemail}</td>
+    // <td>
+    //   <button type="button" class="btn btn-primary btn-sm" onclick="editEmployee(${emp.ecode}, this)">수정</button>
+    //   <button type="button" class="btn btn-danger btn-sm" onclick="deleteEmployee(${emp.ecode}, this)">삭제</button>
+    // </td>
+//   `;
+//   tbody.appendChild(tr);
+// }
 
 // 직원 삭제
 function deleteEmployee(code, btn) {
-  const index = employees.findIndex(e => e.ecode === code);
-  if (index !== -1) {
+  const index = employees.findIndex(e => e.ecode == code);
+  if (index != -1) {
     employees.splice(index, 1);
+    saveToLocalStorage();
     btn.closest('tr').remove();
   }
 }
 
 // 직원 수정
-function editEmployee(code, btn) {
-  const index = employees.findIndex(e => e.ecode === code);
-  if (index === -1) return;
-  const emp = employees[index];
-  const tr = btn.closest('tr');
-  tr.innerHTML = `
-    <td>${emp.ecode}</td>
-    <td><input class="form-control" value="${emp.ename}"/></td>
-    <td><input type="date" class="form-control" value="${emp.ebirth}"/></td>
-    <td><input class="form-control" value="${emp.edept}"/></td>
-    <td><input class="form-control" value="${emp.eposition}"/></td>
-    <td><input class="form-control" value="${emp.ephone}"/></td>
-    <td><input class="form-control" value="${emp.eemail}"/></td>
-    <td>
-      <button type="button" class="btn btn-success btn-sm" onclick="saveEmployee(${emp.ecode}, this)">저장</button>
-      <button type="button" class="btn btn-secondary btn-sm" onclick="cancelEdit(${emp.ecode}, this)">취소</button>
-    </td>
-  `;
-}
+// function editEmployee(code, btn) {
+//   const index = employees.findIndex(e => e.ecode == code);
+//   if (index == -1) return;
+//   const emp = employees[index];
+//   const tr = btn.closest('tr');
+//   tr.innerHTML = `
+//     <td><input class="form" value="${emp.ecode}"/></td>
+//     <td><input class="form" value="${emp.ename}"/></td>
+//     <td><input class="form" value="${emp.ebirth}"/></td>
+//     <td><input class="form" value="${emp.edept}"/></td>
+//     <td><input class="form" value="${emp.eposition}"/></td>
+//     <td><input class="phone" value="${emp.ephone}"/></td>
+//     <td><input class="email" value="${emp.eemail}"/></td>
+//     <td>
+//       <button type="button" class="btn btn-success btn-sm" onclick="saveEmployee(${emp.ecode}, this)">저장</button>
+//       <button type="button" class="btn btn-secondary btn-sm" onclick="cancelEdit(${emp.ecode}, this)">취소</button>
+//     </td>
+//   `;
+// }
 
 // 직원 저장
 function saveEmployee(code, btn) {
-  const index = employees.findIndex(e => e.ecode === code);
-  if (index === -1) return;
+  const index = employees.findIndex(e => e.ecode == code);
+  if (index == -1) return;
   const tr = btn.closest('tr');
   const inputs = tr.querySelectorAll('input');
   employees[index] = {
-    ecode: code,
-    ename: inputs[0].value,
-    ebirth: inputs[1].value,
-    edept: inputs[2].value,
-    eposition: inputs[3].value,
-    ephone: inputs[4].value,
-    eemail: inputs[5].value
+    ecode: inputs[0].value,
+    ename: inputs[1].value,
+    ebirth: inputs[2].value,
+    edept: inputs[3].value,
+    eposition: inputs[4].value,
+    ephone: inputs[5].value,
+    eemail: inputs[6].value
   };
+  saveToLocalStorage();
   tr.remove();
   renderRow(employees[index]);
 }
@@ -94,3 +107,28 @@ function cancelEdit(code, btn) {
   tr.remove();
   renderRow(emp);
 }
+
+MemberListView()
+function MemberListView() {
+    let tbody = document.querySelector('.tbody')
+    let html = ``;
+    const MemberList = getMemberList()
+    for (let i = 0; i<= MemberList.length - 1; i++) {
+        let member = MemberList[i]
+        html += `<tr>
+                    <td scope="row">${member.memberID}</td>
+                    <td>${member.Name}</td>
+                    <td>${member.Birthday}</td>
+                    <td>${member.departID}</td>
+                    <td>${member.posiID}</td>
+                    <td>${member.Call}</td>
+                    <td>${member.Email}</td>
+                    <td>
+                      <button type="button" class="btn btn-primary btn-sm" onclick="editEmployee(${member.memberID}, this)">수정</button>
+                      <button type="button" class="btn btn-danger btn-sm" onclick="deleteEmployee(${member.memberID}, this)">삭제</button>
+                    </td>
+                    </tr>`
+    };
+    tbody.innerHTML = html;
+};
+
