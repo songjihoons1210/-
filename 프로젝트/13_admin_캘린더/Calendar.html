@@ -193,10 +193,15 @@
                             //getElementById == querySelector
 
                             const ctx = document.querySelector('#myChart');
-                            let currentYear = 2025;
-                            let currentMonth = 12;
+
+                            // 초기 currentYear, currentMonth 값을 HTML에 맞게 세팅
+                            const monthText = document.querySelector('#calTop h6');
+                            let [yearStr, monthStr] = monthText.textContent.trim().split(' ').filter(Boolean);
+                            let currentYear = parseInt(yearStr.replace('년', ''));
+                            let currentMonth = parseInt(monthStr.replace('월', ''));
 
                             function GetDaysInMonth(year, month) {
+                                // month는 1~12 (1월=1, 12월=12)
                                 return new Date(year, month, 0).getDate();
                             }
 
@@ -225,6 +230,7 @@
                                 }
                             }
 
+                            // 초기 데이터 세팅 (currentMonth 그대로 사용)
                             const daysInInitialMonth = GetDaysInMonth(currentYear, currentMonth);
                             const labels = [];
                             for (let i = 1; i <= daysInInitialMonth; i++) {
@@ -249,7 +255,6 @@
                             });
 
                             function monthChange(direction) {
-                                // console.log('monthChange called', direction);
                                 const monthText = document.querySelector('#calTop h6');
                                 let [yearStr, monthStr] = monthText.textContent.trim().split(' ').filter(Boolean);
                                 currentYear = parseInt(yearStr.replace('년', ''));
@@ -267,10 +272,10 @@
                                 monthText.textContent = `${currentYear}년 ${currentMonth.toString().padStart(2, '0')}월`;
                                 console.log('변경 후 currentYear:', currentYear, 'currentMonth:', currentMonth);
 
-
+                                // 여기서도 currentMonth 그대로 넘김
                                 const daysInMonth = GetDaysInMonth(currentYear, currentMonth);
                                 console.log('daysInMonth:', daysInMonth);
-                                
+
                                 const newData = getMonthlyData(currentYear, currentMonth);
                                 console.log('newData:', newData);
 
