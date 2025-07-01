@@ -1,6 +1,5 @@
 AttendaceListView()
 // js가 실행되면 근태이력 AttendaceList view 실행
-
 function AttendaceListView() {
     // console.log('AttendaceListView exe')
     memberInfo();
@@ -47,7 +46,6 @@ function memberInfo(memberID) {
 }
 
 // 지각여부 판단 함수
-
 function lateness(attentTime) {
     let lateness = ''
     if (attentTime > "09:10") {
@@ -117,14 +115,18 @@ function AttendaceViewModal(attendID) {
                     <div>부서 <input type="text" value="${changeDepartName(member.departID)}" disabled/></div>
                     <div>직급 <input type="text" value="${changePositionName(member.posiID)}" disabled/></div>
                     <div>날짜 <input type="date" value="${attendace.date}" disabled/></div>
-                    <div>출근시간 <input type="time" value="${attendace.attentTime}" /></div>
-                    <div>퇴근시간<input type="time" value="${attendace.leaveTime}"/></div>
+                    <div>출근시간 
+                        <input type="time" value="${attendace.attentTime}" />
+                    </div>
+                    <div>퇴근시간
+                        <input type="time" value="${attendace.leaveTime}"/>
+                        <button type="button" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick=valueReset(${attendID})>시간 초기화</button>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                     <button type="button" class="btn btn-primary" onclick="AttendaceUpdate(${attendID})" data-bs-dismiss="modal">저장</button>
                 </div>`
-
             document.querySelector(".modal-content").innerHTML = html
         }
     }
@@ -136,8 +138,12 @@ function AttendaceUpdate(attendID) {
     const newLeaveTime = document.querySelector(".modal-body > div:nth-child(7) >input").value
     console.log(attendID)
 
-    if( newAttentTime > "09:10" ){
-        alert("수정 출근시간 09:10 이후이므로 지각처리됩니다.")
+    if (newAttentTime > "09:10") {
+        alert("수정하시는 출근시간이 09:10 이후이므로 지각처리됩니다.")
+    }
+
+    if (newAttentTime == '' && newLeaveTime == '') {
+        alert("출근시간과 퇴근시간이 공란입니다. 이 경우, 결근 처리 됩니다.")
     }
 
     const attendaceList = getAttendaceList()
@@ -154,3 +160,8 @@ function AttendaceUpdate(attendID) {
     };
 };
 
+// 출근/퇴근 시간 초기화 버튼
+function valueReset(attendID) {
+    document.querySelector('.modal-body > div:nth-child(6) > input').value = ''
+    document.querySelector('.modal-body > div:nth-child(7) > input').value = ''
+}
