@@ -32,7 +32,7 @@ function testbtn() {
     memberCopy.no = borlist.length === 0 ? 1 : borlist[borlist.length - 1].no + 1;
 
     borlist.push(memberCopy);
-    setProducts(borlist);
+    
 
     alert(`${member.Name}님, 출근!`);
     location.href = 'attendMember.html';
