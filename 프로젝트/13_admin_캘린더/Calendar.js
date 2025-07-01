@@ -15,7 +15,8 @@ let contentArray = [
 ];
 
 let cno = 5; // 일정 고유번호 시작값
-// 달력 출근 지각 
+
+// ========================달력 출근 지각 ===========================//
 attenDance()
 function attenDance() {
     let specialDays = contentArray
@@ -23,7 +24,7 @@ function attenDance() {
         .map(plan => plan.date);
 
     // 출근 추가
-    for (let month = 1; month <= 12; month++) {
+    for (let month = 1; month <= 12; month++) { //1월~12월 반복문
         let lastDate = new Date(2025, month, 0).getDate();
 
         for (let day = 1; day <= lastDate; day++) {
@@ -35,7 +36,7 @@ function attenDance() {
             if (!specialDays.includes(dateStr) && weekDay !== 0 && weekDay !== 6) {
                 contentArray.push({
                     cno: cno++,
-                    content: `[출근]:`,
+                    content: `[출근]:${day}`, // day == 카운터 대신 테스트
                     date: dateStr,
                     color: 'black'
                 });
@@ -44,10 +45,10 @@ function attenDance() {
     }
 
     // 지각 추가 (출근과 동일한 조건)
-    for (let month = 1; month <= 12; month++) {
+    for (let month = 1; month <= 12; month++) { //1월~12월 반복문
         let lastDate = new Date(2025, month, 0).getDate();
 
-        for (let day = 1; day <= lastDate; day++) {
+        for (let day = 1; day <= lastDate; day++) { 
             let dateStr = `2025-${month}-${day}`;
             let dateObj = new Date(2025, month - 1, day);
             let weekDay = dateObj.getDay();
@@ -55,7 +56,7 @@ function attenDance() {
             if (!specialDays.includes(dateStr) && weekDay !== 0 && weekDay !== 6) {
                 contentArray.push({
                     cno: cno++,
-                    content: '[지각]:',
+                    content: `[지각]:${day}`, // day == 카운터 대신 테스트
                     date: dateStr,
                     color: 'black'
                 });
@@ -85,11 +86,9 @@ function calPrint() { // 함수의 매개변수 : X , 리턴값 : X
     // - 1일 ~ 마지막 일까지 출력 
     // (1) 현재 날짜의 마지막 일 구하기, 달력은 1부터 마지막 일까지 출력하기 위해서 
     let date = new Date(year, month, 0); // 지정한 연도 와 월 에 해당하는 전달 의 말일 날짜
-    console.log(date); // Tue Dec 31 2024
     let endDay = date.getDate(); // 31
     // (2) 현재 날짜의 1일의 요일 , 1일의 시작 위치를 찾기 위해서 
     let date2 = new Date(year, month - 1, 1); // -1 하는이유 : 컴퓨터는 0:1월 취급 
-    console.log(date2); // Sun Dec 01 2024 00:00:00 GMT+0900
     let startWeek = date2.getDay(); // 요일 , 0
 
     // + 각 월의 1일 전까지 공백 출력 
@@ -104,7 +103,6 @@ function calPrint() { // 함수의 매개변수 : X , 리턴값 : X
         // 일정 출력 
         // 1. 현재 보고있는 날짜 형식 구성
         let date3 = `${year}-${month}-${day}`; // 현재 반복문이 처리중인 날짜  
-        console.log(date3);
         // 2. 현재 날짜와 등록된 일정날짜와 동일한 일정 찾기/검색 해서 동일하면 일정내용 출력 
         let plenHtml = ``; // for 밖에 만든 이유 : 동일한 날짜의 2개 이상의 일정이 있을수 있으므로 누적 
         for (let index = 0; index <= contentArray.length - 1; index++) {
@@ -115,7 +113,7 @@ function calPrint() { // 함수의 매개변수 : X , 리턴값 : X
         } // for end
 
         // 일 출력 + 일정내용 출력 
-        html2 += `<div class='lcy'> ${day} ${plenHtml} </div>` // 일 수정 가능
+        html2 += `<div class='dayEdit'> ${day} ${plenHtml} </div>` // 일 수정 가능
     } // for end 
     calBottom.innerHTML = html2;         // - 출력
     return; // [함수 종료] 함수가 종료 되면서 반환되는 값 , 값이 없을경우 return 생략이 가능 
@@ -135,3 +133,4 @@ function monthChange(changeMonth) {  // 함수의 매개변수 : 이전달/다�
     return; // [함수 종료] 
 } // f end 
 
+console.log(departmentList);
