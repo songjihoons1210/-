@@ -24,7 +24,7 @@ function AttendaceListView() {
                         <td style='color : red; font-weight:500'>${lateness(attendace.attentTime)}</td>
                         <td style='color : red; font-weight:500'>${absence(attendace.attentTime)}</td>
                         <td>
-                            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">수정</button>
+                            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="AttendaceViewModal(${attendace.attendID})">수정</button>
                         </td>
                     </tr>`
     };
@@ -98,3 +98,59 @@ function changeDepartName(input) {
     };
     return dapart
 };
+
+// 근태이력 수정 > 모달에 정보 표시
+function AttendaceViewModal(attendID) {
+    let html = ``;
+    const attendaceList = getAttendaceList()
+    for (let i = attendaceList.length - 1; i >= 0; i--) {
+        let attendace = attendaceList[i]
+        if (attendace.attendID == attendID) {
+            let member = memberInfo(attendace.memberID);
+            html += `<div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">근태이력 수정</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>사번 <input type="number" value="${member.memberID}" disabled/> </div> 
+                    <div>이름 <input type="text" value="${member.Name}" disabled/></div> 
+                    <div>부서 <input type="text" value="${changeDepartName(member.departID)}" disabled/></div>
+                    <div>직급 <input type="text" value="${changePositionName(member.posiID)}" disabled/></div>
+                    <div>날짜 <input type="date" value="${attendace.date}" disabled/></div>
+                    <div>출근시간 <input type="time" value="${attendace.attentTime}" /></div>
+                    <div>퇴근시간<input type="time" value="${attendace.leaveTime}"/></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" onclick="AttendaceUpdate(${attendID})" data-bs-dismiss="modal">저장</button>
+                </div>`
+
+            document.querySelector(".modal-content").innerHTML = html
+        }
+    }
+}
+
+// 근태 이력 수정 저정
+function AttendaceUpdate(attendID) {
+    const newAttentTime = document.querySelector(".modal-body > div:nth-child(6) >input").value
+    const newLeaveTime = document.querySelector(".modal-body > div:nth-child(7) >input").value
+    console.log(attendID)
+
+    if( newAttentTime > "09:10" ){
+        alert("수정 출근시간 09:10 이후이므로 지각처리됩니다.")
+    }
+
+    const attendaceList = getAttendaceList()
+    for (let i = attendaceList.length - 1; i >= 0; i--) {
+        let attendace = attendaceList[i]
+        if (attendace.attendID == attendID) {
+            attendace.attentTime = newAttentTime
+            attendace.leaveTime = newLeaveTime
+            attendaceList[i] = attendace
+            setAttendaceList(attendaceList)
+            AttendaceListView()
+            return;
+        };
+    };
+};
+
