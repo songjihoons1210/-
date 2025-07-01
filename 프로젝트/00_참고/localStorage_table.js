@@ -1,18 +1,18 @@
 // 공통 table 및 공통 function 정의
 
 // 1. 직급 리스트 =======================================
-const positionList = [
-    { posiID: 10000, posiName: "admin" },
-    { posiID: 10001, posiName: "사장" },
-    { posiID: 10002, posiName: "부사장" },
-    { posiID: 10003, posiName: "이사" },
-    { posiID: 10004, posiName: "부장" },
-    { posiID: 10005, posiName: "차장" },
-    { posiID: 10006, posiName: "과장" },
-    { posiID: 10007, posiName: "대리" },
-    { posiID: 10008, posiName: "주임" },
-    { posiID: 10009, posiName: "사원" }
-];
+// const positionList = [
+//     { posiID: 10000, posiName: "admin" },
+//     { posiID: 10001, posiName: "사장" },
+//     { posiID: 10002, posiName: "부사장" },
+//     { posiID: 10003, posiName: "이사" },
+//     { posiID: 10004, posiName: "부장" },
+//     { posiID: 10005, posiName: "차장" },
+//     { posiID: 10006, posiName: "과장" },
+//     { posiID: 10007, posiName: "대리" },
+//     { posiID: 10008, posiName: "주임" },
+//     { posiID: 10009, posiName: "사원" }
+// ];
 
 // 1.1. get 직급 리스트 
 function getPositionList() {
@@ -48,14 +48,14 @@ function changePositionName() {
 }; // 이걸 응용하라는 의미로 이걸 그대로 가져다 쓰면 당연히 에러남 -옹-
 
 // 2. 부서 리스트 =======================================
-const departmentList = [
-    { departID: 30000, departName: "admin" },
-    { departID: 30001, departName: "전략기획부" },
-    { departID: 30002, departName: "총무·경리부" },
-    { departID: 30003, departName: "생산부" },
-    { departID: 30004, departName: "영업부" },
-    { departID: 30005, departName: "개발부" }
-];
+// const departmentList = [
+//     { departID: 30000, departName: "admin" },
+//     { departID: 30001, departName: "전략기획부" },
+//     { departID: 30002, departName: "총무·경리부" },
+//     { departID: 30003, departName: "생산부" },
+//     { departID: 30004, departName: "영업부" },
+//     { departID: 30005, departName: "개발부" }
+// ];
 
 // 2.1. get 부서 리스트 
 function getDepartmentList() {
@@ -90,19 +90,19 @@ function changeDepartName() {
 }; // 이걸 응용하라는 의미로 이걸 그대로 가져다 쓰면 당연히 에러남 -옹-
 
 // 3. 휴일 리스트 =======================================
-const holidayList = [
-    { holidayDate: '2025-05-05', week: 2, note: '어린이날' },
-    { holidayDate: '2025-05-06', week: 3, note: '대체 휴일' },
-    { holidayDate: '2025-06-03', week: 3, note: '대통령 선거' },
-    { holidayDate: '2025-06-06', week: 6, note: '현충일' },
-    { holidayDate: '2025-08-15', week: 6, note: '광복절' },
-    { holidayDate: '2025-10-03', week: 6, note: '개천절' },
-    { holidayDate: '2025-10-06', week: 2, note: '추석 연휴' },
-    { holidayDate: '2025-10-07', week: 3, note: '추석 연휴' },
-    { holidayDate: '2025-10-08', week: 4, note: '대체 공휴일' },
-    { holidayDate: '2025-10-09', week: 5, note: '한글날' },
-    { holidayDate: '2025-12-25', week: 5, note: '성탄절' }
-];
+// const holidayList = [
+//     { holidayDate: '2025-05-05', week: 2, note: '어린이날' },
+//     { holidayDate: '2025-05-06', week: 3, note: '대체 휴일' },
+//     { holidayDate: '2025-06-03', week: 3, note: '대통령 선거' },
+//     { holidayDate: '2025-06-06', week: 6, note: '현충일' },
+//     { holidayDate: '2025-08-15', week: 6, note: '광복절' },
+//     { holidayDate: '2025-10-03', week: 6, note: '개천절' },
+//     { holidayDate: '2025-10-06', week: 2, note: '추석 연휴' },
+//     { holidayDate: '2025-10-07', week: 3, note: '추석 연휴' },
+//     { holidayDate: '2025-10-08', week: 4, note: '대체 공휴일' },
+//     { holidayDate: '2025-10-09', week: 5, note: '한글날' },
+//     { holidayDate: '2025-12-25', week: 5, note: '성탄절' }
+// ];
 
 // 3.1. get 휴일 리스트 
 function getHolidayList() {
@@ -123,24 +123,25 @@ function setHolidayList(holidayList) {
 // 3.2. set 휴일 리스트
 
 // 4. 직원 리스트  =======================================
-const memberList = [
-    { memberID: 50000, Name: 'admin', Birthday: '2020-03-01', Call: '010-0000-0000', Email: 'exam@example.com', posiID: 10050, departID: 30050, pwd: 'qwer1234' },
-    { memberID: 50001, Name: '김지훈', Birthday: '1986-03-14', Call: '010-2453-6874', Email: 'jh.kim@example.com', posiID: 10003, departID: 30004, pwd: '50001a30004' },
-    { memberID: 50002, Name: '이수연', Birthday: '1990-07-22', Call: '010-3384-2091', Email: 'sy.lee@example.com', posiID: 10006, departID: 30001, pwd: '50002a30001' },
-    { memberID: 50003, Name: '박민준', Birthday: '1984-01-11', Call: '010-7732-1125', Email: 'mj.park@example.com', posiID: 10001, departID: 30001, pwd: '50003a30001' },
-    { memberID: 50004, Name: '정예린', Birthday: '1993-09-30', Call: '010-4556-9881', Email: 'yr.jung@example.com', posiID: 10009, departID: 30003, pwd: '50004a30003' },
-    { memberID: 50005, Name: '최유진', Birthday: '1988-12-05', Call: '010-6721-3359', Email: 'yj.choi@example.com', posiID: 10004, departID: 30002, pwd: '50005a30002' },
-    { memberID: 50006, Name: '김도현', Birthday: '1995-04-16', Call: '010-3021-8772', Email: 'dh.kim@example.com', posiID: 10007, departID: 30005, pwd: '50006a30005' },
-    { memberID: 50007, Name: '윤서영', Birthday: '1992-06-01', Call: '010-5902-4887', Email: 'sy.yoon@example.com', posiID: 10008, departID: 30003, pwd: '50007a30003' },
-    { memberID: 50008, Name: '한지훈', Birthday: '1985-10-28', Call: '010-8210-1345', Email: 'jh.han@example.com', posiID: 10002, departID: 30001, pwd: '50008a30001' },
-    { memberID: 50009, Name: '서민재', Birthday: '1991-11-09', Call: '010-4123-9832', Email: 'mj.seo@example.com', posiID: 10005, departID: 30002, pwd: '50009a30002' },
-    { memberID: 50010, Name: '오세영', Birthday: '1994-02-25', Call: '010-7432-6870', Email: 'sy.oh@example.com', posiID: 10009, departID: 30004, pwd: '50010a30004' },
-    { memberID: 50011, Name: '배정우', Birthday: '1989-08-13', Call: '010-9340-6289', Email: 'jw.bae@example.com', posiID: 10004, departID: 30001, pwd: '50011a30001' },
-    { memberID: 50012, Name: '임하늘', Birthday: '1996-05-19', Call: '010-2673-7451', Email: 'hn.lim@example.com', posiID: 10009, departID: 30002, pwd: '50012a30002' },
-    { memberID: 50013, Name: '문가영', Birthday: '1993-10-03', Call: '010-3876-1183', Email: 'gy.moon@example.com', posiID: 10007, departID: 30004, pwd: '50013a30004' },
-    { memberID: 50014, Name: '조현우', Birthday: '1987-07-07', Call: '010-1459-7833', Email: 'hw.cho@example.com', posiID: 10008, departID: 30005, pwd: '50014a30005' },
-    { memberID: 50015, Name: '홍지민', Birthday: '1992-01-31', Call: '010-6128-3955', Email: 'jm.hong@example.com', posiID: 10006, departID: 30001, pwd: '50015a30001' }
-]
+
+// const memberList = [
+//     { memberID: 50000, Name: 'admin', Birthday: '2020-03-01', Call: '010-0000-0000', Email: 'exam@example.com', posiID: 10050, departID: 30050, pwd: 'qwer1234' },
+//     { memberID: 50001, Name: '김지훈', Birthday: '1986-03-14', Call: '010-2453-6874', Email: 'jh.kim@example.com', posiID: 10003, departID: 30004, pwd: '50001a30004' },
+//     { memberID: 50002, Name: '이수연', Birthday: '1990-07-22', Call: '010-3384-2091', Email: 'sy.lee@example.com', posiID: 10006, departID: 30001, pwd: '50002a30001' },
+//     { memberID: 50003, Name: '박민준', Birthday: '1984-01-11', Call: '010-7732-1125', Email: 'mj.park@example.com', posiID: 10001, departID: 30001, pwd: '50003a30001' },
+//     { memberID: 50004, Name: '정예린', Birthday: '1993-09-30', Call: '010-4556-9881', Email: 'yr.jung@example.com', posiID: 10009, departID: 30003, pwd: '50004a30003' },
+//     { memberID: 50005, Name: '최유진', Birthday: '1988-12-05', Call: '010-6721-3359', Email: 'yj.choi@example.com', posiID: 10004, departID: 30002, pwd: '50005a30002' },
+//     { memberID: 50006, Name: '김도현', Birthday: '1995-04-16', Call: '010-3021-8772', Email: 'dh.kim@example.com', posiID: 10007, departID: 30005, pwd: '50006a30005' },
+//     { memberID: 50007, Name: '윤서영', Birthday: '1992-06-01', Call: '010-5902-4887', Email: 'sy.yoon@example.com', posiID: 10008, departID: 30003, pwd: '50007a30003' },
+//     { memberID: 50008, Name: '한지훈', Birthday: '1985-10-28', Call: '010-8210-1345', Email: 'jh.han@example.com', posiID: 10002, departID: 30001, pwd: '50008a30001' },
+//     { memberID: 50009, Name: '서민재', Birthday: '1991-11-09', Call: '010-4123-9832', Email: 'mj.seo@example.com', posiID: 10005, departID: 30002, pwd: '50009a30002' },
+//     { memberID: 50010, Name: '오세영', Birthday: '1994-02-25', Call: '010-7432-6870', Email: 'sy.oh@example.com', posiID: 10009, departID: 30004, pwd: '50010a30004' },
+//     { memberID: 50011, Name: '배정우', Birthday: '1989-08-13', Call: '010-9340-6289', Email: 'jw.bae@example.com', posiID: 10004, departID: 30001, pwd: '50011a30001' },
+//     { memberID: 50012, Name: '임하늘', Birthday: '1996-05-19', Call: '010-2673-7451', Email: 'hn.lim@example.com', posiID: 10009, departID: 30002, pwd: '50012a30002' },
+//     { memberID: 50013, Name: '문가영', Birthday: '1993-10-03', Call: '010-3876-1183', Email: 'gy.moon@example.com', posiID: 10007, departID: 30004, pwd: '50013a30004' },
+//     { memberID: 50014, Name: '조현우', Birthday: '1987-07-07', Call: '010-1459-7833', Email: 'hw.cho@example.com', posiID: 10008, departID: 30005, pwd: '50014a30005' },
+//     { memberID: 50015, Name: '홍지민', Birthday: '1992-01-31', Call: '010-6128-3955', Email: 'jm.hong@example.com', posiID: 10006, departID: 30001, pwd: '50015a30001' }
+// ]
 
 // 4.1. get 직원 리스트 
 function getMemberList() {
@@ -787,6 +788,7 @@ function getAttendaceList() {
     return attendaceList;
 };
 
+setAttendaceList(attendaceList)
 // 5.2. set 근태 리스트
 function setAttendaceList(attendaceList) {
     localStorage.setItem('attendaceList', JSON.stringify(attendaceList));
