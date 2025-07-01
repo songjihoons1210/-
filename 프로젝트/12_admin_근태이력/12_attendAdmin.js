@@ -165,3 +165,28 @@ function valueReset(attendID) {
     document.querySelector('.modal-body > div:nth-child(6) > input').value = ''
     document.querySelector('.modal-body > div:nth-child(7) > input').value = ''
 }
+
+// 페이지네이션
+// 한페이지에 표시할 행 수
+const ContentPerPage = 30;
+// 페이지 수 계산
+function pageQTY() {
+    const attendaceList = getAttendaceList()
+    let pageQTY = attendaceList.length / ContentPerPage
+
+    if (attendaceList.length % ContentPerPage == 0) {
+        return pageQTY  // 근태이력/페이지 수의 나머지가 없으면 QTY를 그대로
+    } else {
+        // 근태이력/페이지 수의 나머지가 있으면 QTY에 +1
+        pageQTY = (attendaceList.length - attendaceList.length % ContentPerPage) / ContentPerPage + 1;
+        // console.log(pageQTY)
+        return pageQTY;
+    };
+};
+divideContent() 
+function divideContent() {
+    let pageqty = pageQTY()
+    for(let i = 0 ; i < pageqty ; i++){
+       
+    }
+};
