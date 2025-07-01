@@ -771,7 +771,7 @@ function changeMemberName() {
 //     { attendID: 100591, memberID: 50011, date: '2025-06-30', attentTime: '08:40', leaveTime: '18:39' },
 //     { attendID: 100592, memberID: 50012, date: '2025-06-30', attentTime: '09:25', leaveTime: '18:10' },
 //     { attendID: 100593, memberID: 50013, date: '2025-06-30', attentTime: '08:33', leaveTime: '18:07' },
-//     { attendID: 100594, memberID: 50014, date: '2025-06-30', attentTime: '08:52', leaveTime: '18:16' },
+//     { attendID: 100594, memberID: 50014, date: '2025-06-30', attentTime:'' , leaveTime: ''},
 //     { attendID: 100595, memberID: 50015, date: '2025-06-30', attentTime: '08:56', leaveTime: '18:36' }
 // ]
 
