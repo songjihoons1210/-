@@ -791,3 +791,4 @@ function getAttendaceList() {
 function setAttendaceList(attendaceList) {
     localStorage.setItem('attendaceList', JSON.stringify(attendaceList));
 };
+
