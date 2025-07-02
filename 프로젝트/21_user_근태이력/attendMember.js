@@ -1,6 +1,6 @@
 
-function getmemberList() {console.log(employee);
-    console.log(employee);
+function getmemberList() {
+   
     let memberList = localStorage.getItem('memberList');
     if (memberList == null) {
         memberList = [];
@@ -10,11 +10,12 @@ function getmemberList() {console.log(employee);
 
 }
 
-function setmemberList(memberList) { console.log(employee);
+function setmemberList(memberList) {
     localStorage.setItem('memberList', JSON.stringify(memberList))
 }
-console.log(employee);
-function usercode() { console.log(employee);
+
+usercode();
+function usercode() { 
     //가져오기
     const url = new URLSearchParams(location.search);
     const employee = url.get('memberID');
@@ -23,12 +24,12 @@ function usercode() { console.log(employee);
         const member = memberList[i];
         if(member.memberID == employee) {
             document.querySelector('.employee').value = member.memberID;
-            document.querySelector('.staffname').value = member.staffname;
-            document.querySelector('.birthdate').value = member.birthdate;
-            document.querySelector('.position').value = member.position;
-            document.querySelector('.post').value = member.post;
-            document.querySelector('.email').value = member.email;
-            document.querySelector('.phonenum').value = member.phonenum;
+            document.querySelector('.staffname').value = member.Name;
+            document.querySelector('.birthdate').value = member.Birthday;
+            document.querySelector('.position').value = member.posiID;
+            document.querySelector('.post').value = member.departID;
+            document.querySelector('.email').value = member.Email;
+            document.querySelector('.phonenum').value = member.call;
             break;
         }
     }
