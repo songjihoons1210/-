@@ -43,7 +43,7 @@ function divideContent() {
 };
 
 //표 하단 페이지 버튼
-pageNumber()
+pageNumber() //출처: 부트스트랩-페이지네이션!!
 function pageNumber() {
     let pagination = document.querySelector('.pagination')
     let html = ``
