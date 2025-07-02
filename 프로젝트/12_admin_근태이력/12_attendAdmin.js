@@ -47,22 +47,28 @@ pageNumber() //출처: 부트스트랩-페이지네이션!!
 function pageNumber() {
     let pagination = document.querySelector('.pagination')
     let html = ``
+    let url = new URLSearchParams(location.search);
+    let page = Number(url.get('page'))
+
+    let pageDown = page - 1 ;
+    let pageUp = page + 1;
+
     let pageqty = pageQTY()
     html += `<li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
+                <a class="page-link" href="12_attendAdmin.html?page=${pageDown}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>`
     for (let i = 1; i <= pageqty; i++) {
-        html += `<li class="page-item"><a class="page-link" href="12_attendAdmin.html?page=${i}">${i}</a></li>` //@@반영시 href수정필요
-    }
+        html += `<li class="page-item"><a class="page-link" href="12_attendAdmin.html?page=${i}">${i}</a></li>`
     html += `<li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
+                <a class="page-link" href="12_attendAdmin.html?page=${pageUp}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>`
     pagination.innerHTML = html
 }
+
 
 //근태이력 조회====================================================================================
 
@@ -105,10 +111,10 @@ function AttendaceListView() {
                             <button type="button" class="btn btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="AttendaceViewModal(${attendace.attendID})">수정</button>
                         </td>
                     </tr>`
-                    // changeDepartName(member.departID) : 부서ID를 기반으로 부서명을 가져오는 함수
-                    // changePositionName(member.posiID) : 직급ID를 기반으로 직급명 가져오는 함수 
-                    // lateness(출근시간) : 출근시간을 기반으로 지각여부를 판단하는 함수
-                    // absence(출근시간) : 출근시간이 없다면 결근으로 판단하는 함수
+            // changeDepartName(member.departID) : 부서ID를 기반으로 부서명을 가져오는 함수
+            // changePositionName(member.posiID) : 직급ID를 기반으로 직급명 가져오는 함수 
+            // lateness(출근시간) : 출근시간을 기반으로 지각여부를 판단하는 함수
+            // absence(출근시간) : 출근시간이 없다면 결근으로 판단하는 함수
         };
     };
     tbody.innerHTML = html;
