@@ -71,6 +71,14 @@ function calPrint() {
   calBottom.innerHTML = html;
 }
 
+function mounth5data(){
+  let month5=getAttendaceList();
+  for(let i=0; i<=month5.length-1; i++){
+    console.log(month5[i]);
+  }
+
+}
+
 // 월별 출근/지각 데이터 생성 함수
 function getMonthlyData(year, month) {
   const daysInMonth = new Date(year, month, 0).getDate(); // 월 마지막 일자
@@ -92,13 +100,13 @@ function getMonthlyData(year, month) {
         ? [5, 10, 3, 8, 2, 15, 20][(day - 1) % 7]
         : month === 6            // 6월달 출근 차트 값
           ? [20, 18, 22, 25, 27][(day - 1) % 5]
-          : Math.floor(Math.random() * 30); // 5,6월 제외 한 나머지 출근 랜덤값
+          : Math.floor(Math.random() * 30); // 5,6월 제외 한 나머지 랜덤값
 
       const 지각값 = month === 5 // 5월달 지각 차트 값
         ? [2, 4, 6, 1, 0, 3, 2][(day - 1) % 7]
         : month === 6           // 6월달 지각 차트 값
           ? [0, 1, 2, 1, 0][(day - 1) % 5]
-          : Math.floor(Math.random() * 10); // 5,6월 제외한 나머지 지각 랜덤값
+          : Math.floor(Math.random() * 10); // 5,6월 제외한 나머지 지각 랜덤값  
 
       출근.push(출근값);
       지각.push(지각값);
@@ -155,9 +163,4 @@ function monthChange(direction) {
 window.onload = () => {
   calPrint();       // 달력 출력
   monthChange(0);   // 차트 초기화 (현재월 기준)
-};
-
-
-function chartEdit(){
-  getAttendaceList()
 };
