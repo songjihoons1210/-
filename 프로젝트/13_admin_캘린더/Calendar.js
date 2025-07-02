@@ -30,7 +30,7 @@ function calPrint() {
   const lastDate = new Date(currentYear, currentMonth, 0).getDate();
 
   // 시작 요일 전까지 빈 칸 채우기
-  for(let i = 0; i < firstDay; i++) html += `<div></div>`;
+  for (let i = 0; i < firstDay; i++) html += `<div></div>`;
 
   // 출근/지각 데이터 가져오기
   const monthlyData = getMonthlyData(currentYear, currentMonth);
@@ -38,7 +38,7 @@ function calPrint() {
   const 지각 = monthlyData.지각;
 
   // 날짜별 셀 생성
-  for(let day = 1; day <= lastDate; day++) {
+  for (let day = 1; day <= lastDate; day++) {
     const dateStr = `${currentYear}-${currentMonth}-${day}`;
     const weekDay = new Date(currentYear, currentMonth - 1, day).getDay(); // 0:일, 6:토
 
@@ -71,45 +71,64 @@ function calPrint() {
   calBottom.innerHTML = html;
 }
 
-function mounth5data(){
-  let month5=getAttendaceList();
-  for(let i=0; i<=month5.length-1; i++){
-    console.log(month5[i]);
-  }
 
+mounth5Attend();
+function mounth5Attend() { //5월 출근/지각 찾기
+  let month5AttendArray = [];
+  let month5lateArray = [];
+  let month5 = getAttendaceList();
+  // 5월 정상출근
+  for (let i = 0; i <= month5.length - 1; i++) {
+    let attend = month5[i]
+
+    if (attend.date >= "2025-05-01" && attend.date < "2025-06-01") {
+      if (attend.attentTime <= "09:00") {
+        month5AttendArray.push(attend);
+
+      }
+    }
+  }
+  for (let j = 0; j <= month5.length - 1; j++) {
+    let late = month5[j]
+    if (late.date >= "2025-05-01" && late.date < "2025-06-01") {
+      if (late.attentTime >= "09:00") {
+        month5lateArray.push(late);
+      }
+    }
+
+  }
+  return {month5AttendArray,month5lateArray};
+  // console.log(month5lateArray);
 }
 
 // 월별 출근/지각 데이터 생성 함수
 function getMonthlyData(year, month) {
-  const daysInMonth = new Date(year, month, 0).getDate(); // 월 마지막 일자
-
+  const {month5AttendArray,month5lateArray}=mounth5Attend()
+  const daysInMonth = new Date(year, month, 0).getDate();
   const 출근 = [];
   const 지각 = [];
+
+
+  const 지각패턴_5월 = { 1: 2, 2: 4, 3: 6, 4: 1, 5: 0 };
+  const 출근패턴_6월 = { 1: 20, 2: 18, 3: 22, 4: 25, 5: 27 };
+  const 지각패턴_6월 = { 1: 0, 2: 1, 3: 2, 4: 1, 5: 0 };
 
   for (let day = 1; day <= daysInMonth; day++) {
     const date = new Date(year, month - 1, day);
     const weekDay = date.getDay(); // 0:일, 6:토
 
     if (weekDay === 0 || weekDay === 6) {
-      // 주말은 출근/지각 0으로 설정
       출근.push(0);
       지각.push(0);
+    } else if (month === 5) {
+      출근.push(month5AttendArray[weekDay] ?? 0);
+      지각.push(지각패턴_5월[weekDay] ?? 0);
+    } else if (month === 6) {
+      출근.push(출근패턴_6월[weekDay] ?? 0);
+      지각.push(지각패턴_6월[weekDay] ?? 0);
     } else {
-      // 월~금에 대한 패턴별 데이터 생성
-      const 출근값 = month === 5  // 5월달 출근 차트 값
-        ? [5, 10, 3, 8, 2, 15, 20][(day - 1) % 7]
-        : month === 6            // 6월달 출근 차트 값
-          ? [20, 18, 22, 25, 27][(day - 1) % 5]
-          : Math.floor(Math.random() * 30); // 5,6월 제외 한 나머지 랜덤값
-
-      const 지각값 = month === 5 // 5월달 지각 차트 값
-        ? [2, 4, 6, 1, 0, 3, 2][(day - 1) % 7]
-        : month === 6           // 6월달 지각 차트 값
-          ? [0, 1, 2, 1, 0][(day - 1) % 5]
-          : Math.floor(Math.random() * 10); // 5,6월 제외한 나머지 지각 랜덤값  
-
-      출근.push(출근값);
-      지각.push(지각값);
+      출근.push(Math.floor(Math.random() * 30));
+      지각.push(Math.floor(Math.random() * 10));
     }
   }
 
@@ -136,10 +155,10 @@ function monthChange(direction) {
   currentMonth += direction;
 
   // 월 범위를 벗어나면 연도도 조정
-  if(currentMonth < 1) {
+  if (currentMonth < 1) {
     currentMonth = 12;
     currentYear--;
-  } else if(currentMonth > 12) {
+  } else if (currentMonth > 12) {
     currentMonth = 1;
     currentYear++;
   }
@@ -151,7 +170,7 @@ function monthChange(direction) {
   const days = new Date(currentYear, currentMonth, 0).getDate();
   const newData = getMonthlyData(currentYear, currentMonth);
 
-  myChart.data.labels = Array.from({length: days}, (_, i) => (i+1).toString());
+  myChart.data.labels = Array.from({ length: days }, (_, i) => (i + 1).toString());
   myChart.data.datasets = [
     { label: '출근', data: newData.출근, borderColor: 'blue', fill: false },
     { label: '지각', data: newData.지각, borderColor: 'red', fill: false }
