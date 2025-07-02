@@ -103,6 +103,7 @@ function saveNewMember() {
     }
     // console.log(newMember)
 
+    alert("신규 사원 정보가 저장되었습니다.")
     MemberList.push(newMember)
     setMemberList(MemberList)
     MemberListView()
@@ -114,7 +115,7 @@ function deletMember(memberID) {
     for (let i = 0; i < memberList.length; i++) {
         if (memberList[i].memberID == memberID) {
             memberList.splice(i, 1)
-            alert("삭제완료")
+            alert("사원 정보가 삭제되었습니다.")
             setMemberList(memberList)
             MemberListView()
             return
@@ -159,7 +160,7 @@ function updateViewMember(memberID) {
                     html_depart += `<option value=${Department.departID}>${Department.departName}</option>`
                 }
             }
-            //<option selected> 그 옵션이 선택되어서 표시
+            // selected : 그 옵션이 선택되어서 표시
 
             html_updateMember += `
                 <div class="modal-header">

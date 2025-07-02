@@ -18,7 +18,7 @@
         * {
             font-family: 'Noto Sans:ital';
             font-weight: 400;
-            max-width: 1280px;
+            max-width: 600px;
             margin: 0 auto;
             /* border: 1px red solid; */
         }
@@ -54,35 +54,72 @@
             box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
             margin-top: 30px;
         }
-        #main{
+
+        #main {
             text-align: center;
+        }
+
+        .login,
+        .password {
+            margin: 15px;
+            padding: 10px;
+            height: 50px;
+            border-radius: 10px;
+            border-color: #A6A6A6;
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        h4 {
+            padding: 30px 0px 20px 0px;
+            margin-bottom: 30px;
+            font-size: 40px;
+            font-weight: 600;
+        }
+
+        #attndancelogo {
+            margin: 40px auto;
+        }
+
+        .row>div:nth-child(3),
+        .row>div:nth-child(4) {
+            font-size: 25px;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .row button {
+            margin: 50px;
+        }
+
+        .btn-lg{
+            width: 13rem;
+            height: 3rem;
         }
     </style>
 </head>
 
 <body>
     <div id="wrap"> <!--wrap-->
-        <div id="header" class="container text-center"> <!--header-->
-            <div class="row">
-                <img id="attndancelogo" class="col-3" src="../00_참고/_img/attendance_logo.webp">
-                
-            </div>
-        </div><!--header end-->
-
         <div id="main" class="container"> <!--main-->
-
-            <h4>사용자 정보</h4>
-            사번  <input class="login" type="number" /> <br />
-            비번  <input class="password" type="password" /> <br />
-            <button onclick="testbtn()">로그인</button>
-            <script src="../00_참고/localStorage_table.js"></script>
-            <script src='login.js'></script>
-
-        </div>
-
-    </div><!--main end-->
+            <div class="row">
+                <img id="attndancelogo" class="col-8" src="../00_참고/_img/attendance_logo.webp">
+                <h4>로그인</h4>
+                <div>
+                    사번 <input class="login" type="number" />
+                </div>
+                <div>
+                    비번 <input class="password" type="password" />
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-lg" onclick="testbtn()">로그인</button>
+                </div>
+            </div>
+        </div><!--main end-->
     </div> <!--wrap end-->
 
+    <script src="../00_참고/localStorage_table.js"></script>
+    <script src='login.js'></script>
 
 
 

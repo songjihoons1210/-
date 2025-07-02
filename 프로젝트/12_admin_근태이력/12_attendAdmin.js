@@ -260,6 +260,7 @@ function AttendaceUpdate(attendID) {
             attendaceList[i] = attendace
             setAttendaceList(attendaceList)
             AttendaceListView()
+            alert("근태 이력이 수정되었습니다.")
             return;
         };
     };
