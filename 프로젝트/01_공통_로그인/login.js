@@ -25,15 +25,8 @@ function testbtn() {
         return;
     }
 
-    let borlist = getborlist();
-
-    // member 객체 복사 후 no 추가
-    const memberCopy = {...member};
-    memberCopy.no = borlist.length === 0 ? 1 : borlist[borlist.length - 1].no + 1;
-
-    borlist.push(memberCopy);
-    
 
     alert(`${member.Name}님, 출근!`);
-    location.href = 'attendMember.html';
+    location.href = '../21_user_근태이력/attendMember.html';
 }
+
