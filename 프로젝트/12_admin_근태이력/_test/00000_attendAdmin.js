@@ -47,20 +47,27 @@ pageNumber() //출처: 부트스트랩-페이지네이션!!
 function pageNumber() {
     let pagination = document.querySelector('.pagination')
     let html = ``
+    let url = new URLSearchParams(location.search);
+    let page = Number(url.get('page'))
+
+    let pageDown = page - 1;
+    let pageUp = page + 1;
+
     let pageqty = pageQTY()
     html += `<li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
+                <a class="page-link" href="12_attendAdmin.html?page=${pageDown}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>`
     for (let i = 1; i <= pageqty; i++) {
-        html += `<li class="page-item"><a class="page-link" href="12_attendAdminCopy.html?page=${i}">${i}</a></li>` //@@반영시 href수정필요
+        html += `<li class="page-item"><a class="page-link" href="12_attendAdmin.html?page=${i}">${i}</a></li>`
     }
     html += `<li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
+                <a class="page-link" href="12_attendAdmin.html?page=${pageUp}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>`
+
     pagination.innerHTML = html
 }
 
@@ -105,10 +112,10 @@ function AttendaceListView() {
                             <button type="button" class="btn btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="AttendaceViewModal(${attendace.attendID})">수정</button>
                         </td>
                     </tr>`
-                    // changeDepartName(member.departID) : 부서ID를 기반으로 부서명을 가져오는 함수
-                    // changePositionName(member.posiID) : 직급ID를 기반으로 직급명 가져오는 함수 
-                    // lateness(출근시간) : 출근시간을 기반으로 지각여부를 판단하는 함수
-                    // absence(출근시간) : 출근시간이 없다면 결근으로 판단하는 함수
+            // changeDepartName(member.departID) : 부서ID를 기반으로 부서명을 가져오는 함수
+            // changePositionName(member.posiID) : 직급ID를 기반으로 직급명 가져오는 함수 
+            // lateness(출근시간) : 출근시간을 기반으로 지각여부를 판단하는 함수
+            // absence(출근시간) : 출근시간이 없다면 결근으로 판단하는 함수
         };
     };
     tbody.innerHTML = html;
@@ -196,22 +203,34 @@ function AttendaceViewModal(attendID) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div>사번 <input type="number" value="${member.memberID}" disabled/> </div> 
-                    <div>이름 <input type="text" value="${member.Name}" disabled/></div> 
-                    <div>부서 <input type="text" value="${changeDepartName(member.departID)}" disabled/></div>
-                    <div>직급 <input type="text" value="${changePositionName(member.posiID)}" disabled/></div>
-                    <div>날짜 <input type="date" value="${attendace.date}" disabled/></div>
-                    <div>출근시간 
-                        <input type="time" value="${attendace.attentTime}" />
+                    <div>  
+                     <label for="recipient-name" class="col-form-label">사번</label>
+                     <input type="number" value="${member.memberID}" class="form-control" id="recipient-name" disabled/> </div> 
+                    <div>  
+                     <label for="recipient-name" class="col-form-label">이름</label>
+                    <input type="text" value="${member.Name}" class="form-control" id="recipient-name" disabled/></div> 
+                    <div>  
+                     <label for="recipient-name" class="col-form-label">부서</label>
+                    <input type="text" value="${changeDepartName(member.departID)}" class="form-control" id="recipient-name" disabled/></div>
+                    <div>  
+                     <label for="recipient-name" class="col-form-label">직급</label>
+                    <input type="text" value="${changePositionName(member.posiID)}"class="form-control" id="recipient-name"  disabled/></div>
+                    <div>  
+                     <label for="recipient-name" class="col-form-label">날짜</label>
+                    <input type="date" value="${attendace.date}"class="form-control" id="recipient-name"  disabled/></div>
+                    <div>  
+                     <label for="recipient-name" class="col-form-label">출근시간</label>
+                        <input type="time" value="${attendace.attentTime}" class="form-control" id="recipient-name" />
                     </div>
-                    <div>퇴근시간
-                        <input type="time" value="${attendace.leaveTime}"/>
-                        <button type="button" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick=valueReset(${attendID})>시간 초기화</button>
+                    <div>
+                     <label for="recipient-name" class="col-form-label">퇴근시간</label>
+                        <input type="time" value="${attendace.leaveTime}" class="form-control" id="recipient-name"/>
+                        <button type="button" class="btn btn-primary reset-button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick=valueReset(${attendID})>시간 초기화</button>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                    <button type="button" class="btn btn-primary" onclick="AttendaceUpdate(${attendID})" data-bs-dismiss="modal">저장</button>
+                    <button type="button" class="btn btn-primary " onclick="AttendaceUpdate(${attendID})" data-bs-dismiss="modal">저장</button>
                 </div>`
             document.querySelector(".modal-content").innerHTML = html
         }

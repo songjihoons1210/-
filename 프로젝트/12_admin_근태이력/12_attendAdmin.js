@@ -67,6 +67,7 @@ function pageNumber() {
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>`
+
     pagination.innerHTML = html
 }
 
