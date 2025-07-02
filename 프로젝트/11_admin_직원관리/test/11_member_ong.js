@@ -1,8 +1,9 @@
 MemberListView()
-const MemberList = getMemberList()
+
 function MemberListView() {
     let tbody = document.querySelector('.tbody')
     let html = ``;    
+    const MemberList = getMemberList()
     for (let i = 0; i <= MemberList.length - 1; i++) {
         let member = MemberList[i]
         html += `<tr>
@@ -44,7 +45,7 @@ posiSelect.innerHTML = html_posi
 
 // 신규직원 저장
 function saveNewMember(){
-    
+    const MemberList = getMemberList()
     if (MemberList.length == 0) {
         memberID = 1
     } else (
@@ -56,3 +57,4 @@ function saveNewMember(){
     }
     // memberID	Name	Birthday	Call	Email	posiID	departID	pwd
 }
+

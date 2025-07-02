@@ -74,8 +74,10 @@
 
         .content_top{
             display: flex;
-            justify-content: space-between; /* 좌우 끝으로 정렬 */
-            align-items: center;            /* 세로 정렬 */
+            justify-content: space-between; 
+            /* 좌우 끝으로 정렬 */
+            align-items: center;            
+            /* 세로 정렬 */
             margin-bottom: 20px;     
         }
 
@@ -101,9 +103,7 @@
             white-space: nowrap;
             overflow: hidden;
         }
-        input.form,
-        input.phone,
-        input.email {
+        input.form{
             width: 100%;
             max-width: 120px;
             box-sizing: border-box;
@@ -133,8 +133,10 @@
                 <img id="attndancelogo" class="col-3" src="_img/attendance_logo.webp">
                 <div id="menuBar" class=" col-9 container row">
                     <a href="11_member.html" role="button" class="btn btn-outline-dark col menubutton">사원관리</a>
-                    <a href="../12_admin_근태이력/12_attendAdmin.html?page=1" role="button" class="btn btn-outline-dark col menubutton">근태이력</a>
-                    <a href="../13_admin_캘린더/Calendar.html" role="button" class="btn btn-outline-dark col menubutton">캘린더</a>
+                    <a href="../12_admin_근태이력/12_attendAdmin.html?page=1" role="button" 
+                    class="btn btn-outline-dark col menubutton">근태이력</a>
+                    <a href="../13_admin_캘린더/Calendar.html" role="button" 
+                    class="btn btn-outline-dark col menubutton">캘린더</a>
                 </div>
             </div>
         </div><!--header end-->
@@ -164,6 +166,33 @@
             </div><!--content1 end-->
         </div><!--main end-->
     </div> <!--wrap end-->
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">신규사원</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div><label for="recipient-name" class="col-form-label">사번</label> <input 
+                        class="form-control" id="recipient-name"  type="number" disabled /> </div>
+                    <div><label for="recipient-name" class="col-form-label">이름</label> <input class="form-control" id="recipient-name" type="text"/></div>
+                    <div><label for="recipient-name" class="col-form-label">생년월일</label> <input class="form-control" id="recipient-name" type="text"/></div>
+                    <div><label for="recipient-name" class="col-form-label">연락처</label> <input class="form-control" id="recipient-name" type="text"/></div>
+                    <div><label for="recipient-name" class="col-form-label">이메일</label> <input class="form-control" id="recipient-name" type="date"/></div>
+                    <div><label for="recipient-name" class="col-form-label">부서</label> <select class="departSelect" class="form-control" id="recipient-name" ></select></div>
+                    <div><label for="recipient-name" class="col-form-label">직급</label> <select class="posiSelect" class="form-control" id="recipient-name" ></select></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" onclick="saveNewMember()">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="../00_참고/localStorage_table.js"></script>
     <script src="11_member.js"></script>

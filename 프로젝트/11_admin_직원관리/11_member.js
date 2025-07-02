@@ -116,6 +116,29 @@ function setMemberList(list) {
 
 
 
+
+
+
+// 모달 내의 부서 선택 
+let departSelect = document.querySelector('.departSelect')
+const DepartmentList = getDepartmentList()
+let html_depart = ``
+for (let i = 1; i < DepartmentList.length; i++) {
+    Department = DepartmentList[i]
+    html_depart += `<option value=${Department.departID}>${Department.departName}</option>`
+}
+departSelect.innerHTML = html_depart
+
+// 모달 내의 직급 선택
+let posiSelect = document.querySelector('.posiSelect')
+const PositionList = getPositionList()
+let html_posi = ``
+for (let i = 1; i < PositionList.length; i++) {
+    position = PositionList[i]
+    html_posi += `<option value=${position.posiID}>${position.posiName}</option>`
+}
+posiSelect.innerHTML = html_posi
+
 // 9. 페이지 로딩시 초기 렌더링
 window.addEventListener('DOMContentLoaded', () => {
     renderMemberList();
