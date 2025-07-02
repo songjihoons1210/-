@@ -1,136 +1,163 @@
-// - new Date() 현재 시스템(PC) 의 날짜/시간 반환 객체
-// - new Date( 연도 , 월 , 일 ) 지정한 연도월일에 해당하는 날짜 객체 
+// 현재 연도와 월 설정
+let currentYear = 2025;
+let currentMonth = 6;
 
-// 전역변수 : 특정한 { } 안에서 선언되지 않은 변수 , 선언이란? 만들기/정의 , let , const , function 
-let today = new Date();
-let year = today.getFullYear(); // 오늘의 연도 
-let month = today.getMonth() + 1; // 오늘의 월 , +1 하는이유 : 12월이 11로 반환이 되기 때문에 
-
-// + 달력의 일정/내용
+// 공휴일 및 일정 데이터
 let contentArray = [
-    { cno: 1, content: '어린이날,부처님오신날', date: '2025-5-5', color: 'red' },
-    { cno: 2, content: '대체휴일', date: '2024-5-6', color: 'red' },
-    { cno: 3, content: '제21대 대통령선거', date: '2025-6-3', color: 'red' },
-    { cno: 4, content: '현충일', date: '2025-6-6', color: 'red' }
+  { cno: 1, content: '어린이날,부처님오신날', date: '2025-5-5', color: 'red' },
+  { cno: 2, content: '대체휴일', date: '2024-5-6', color: 'red' },
+  { cno: 3, content: '제21대 대통령선거', date: '2025-6-3', color: 'red' },
+  { cno: 4, content: '현충일', date: '2025-6-6', color: 'red' }
 ];
 
-let cno = 5; // 일정 고유번호 시작값
+// 달력 출력 함수
+function calPrint() {
+  // 상단에 년/월 텍스트 설정
+  const h6 = document.getElementById('monthText');
+  h6.textContent = `${currentYear}년 ${currentMonth.toString().padStart(2, '0')}월`;
 
-// ========================달력 출근 지각 ===========================//
-attenDance()
-function attenDance() {
-    let specialDays = contentArray
-        .filter(plan => plan.color === 'red')
-        .map(plan => plan.date);
+  const calBottom = document.getElementById('calBottom');
 
-    // 출근 추가
-    for (let month = 1; month <= 12; month++) { //1월~12월 반복문
-        let lastDate = new Date(2025, month, 0).getDate();
+  // 요일 표시 (일~토)
+  let html = `
+    <div class="week sunday">일</div><div class="week">월</div><div class="week">화</div>
+    <div class="week">수</div><div class="week">목</div><div class="week">금</div><div class="week thuday">토</div>`;
 
-        for (let day = 1; day <= lastDate; day++) {
-            let dateStr = `2025-${month}-${day}`;
-            let dateObj = new Date(2025, month - 1, day);
-            let weekDay = dateObj.getDay(); // 0:일, 1:월, ..., 6:토
+  // 해당 월의 1일 요일 (0=일요일~6=토요일)
+  const firstDay = new Date(currentYear, currentMonth - 1, 1).getDay();
 
-            // 주말이 아니고, 공휴일이 아닌 경우만 출근 추가
-            if (!specialDays.includes(dateStr) && weekDay !== 0 && weekDay !== 6) {
-                contentArray.push({
-                    cno: cno++,
-                    content: `[출근]:${day}`, // day == 카운터 대신 테스트
-                    date: dateStr,
-                    color: 'black'
-                });
-            }
-        }
+  // 해당 월의 마지막 날짜
+  const lastDate = new Date(currentYear, currentMonth, 0).getDate();
+
+  // 시작 요일 전까지 빈 칸 채우기
+  for(let i = 0; i < firstDay; i++) html += `<div></div>`;
+
+  // 출근/지각 데이터 가져오기
+  const monthlyData = getMonthlyData(currentYear, currentMonth);
+  const 출근 = monthlyData.출근;
+  const 지각 = monthlyData.지각;
+
+  // 날짜별 셀 생성
+  for(let day = 1; day <= lastDate; day++) {
+    const dateStr = `${currentYear}-${currentMonth}-${day}`;
+    const weekDay = new Date(currentYear, currentMonth - 1, day).getDay(); // 0:일, 6:토
+
+    let dayContent = '';
+    let isHoliday = false;
+
+    // contentArray에 해당 날짜가 있으면 공휴일로 간주
+    for (let plan of contentArray) {
+      if (plan.date === dateStr) {
+        isHoliday = true;
+        dayContent += `<span style="color:${plan.color}; font-size:1.0em; font-weight:bold">${plan.content}</span>`;
+        break;
+      }
     }
 
-    // 지각 추가 (출근과 동일한 조건)
-    for (let month = 1; month <= 12; month++) { //1월~12월 반복문
-        let lastDate = new Date(2025, month, 0).getDate();
+    // 평일이면서 공휴일이 아닐 경우 출근/지각 정보 표시
+    if (weekDay !== 0 && weekDay !== 6 && !isHoliday) {
+      const 출근값 = 출근[day - 1] ?? 0;
+      const 지각값 = 지각[day - 1] ?? 0;
 
-        for (let day = 1; day <= lastDate; day++) { 
-            let dateStr = `2025-${month}-${day}`;
-            let dateObj = new Date(2025, month - 1, day);
-            let weekDay = dateObj.getDay();
-
-            if (!specialDays.includes(dateStr) && weekDay !== 0 && weekDay !== 6) {
-                contentArray.push({
-                    cno: cno++,
-                    content: `[지각]:${day}`, // day == 카운터 대신 테스트
-                    date: dateStr,
-                    color: 'black'
-                });
-            }
-        }
+      dayContent += `<div style="color:black">출근: ${출근값}명</div>`;
+      dayContent += `<div style="color:black">지각: ${지각값}명</div>`;
     }
+
+    // 최종 HTML에 날짜 셀 추가
+    html += `<div class='dayEdit'>${day}<br>${dayContent}</div>`;
+  }
+
+  // 달력 본문 출력
+  calBottom.innerHTML = html;
 }
-// [1] 달력 출력함수  , 실행조건 : js가 실행될때 , 월변경될때마다
-calPrint(); // js가 실행될때 최초 1번 함수 실행 
-function calPrint() { // 함수의 매개변수 : X , 리턴값 : X
-    // (1) 상단의 달력 연도/월 표시 
-    // - 어디에
-    let h6 = document.querySelector('#calTop > h6 ')
-    // - 무엇을 
-    let html = `${year}년 ${month}월`
-    // - 출력 
-    h6.innerHTML = html;
-    // (2) 하단의 현재 연도/월의 일 표시 
-    let calBottom = document.querySelector('#calBottom')         // - 어디에 
-    let html2 = ``;         // - 무엇을 
-    // - 요일 출력 
-    html2 += `<div class="week sunday">일</div><div class="week" >월</div>
-            <div class="week">화</div><div class="week">수</div>
-            <div class="week">목</div><div class="week">금</div>
-            <div class="week thuday">토</div>`;
 
-    // - 1일 ~ 마지막 일까지 출력 
-    // (1) 현재 날짜의 마지막 일 구하기, 달력은 1부터 마지막 일까지 출력하기 위해서 
-    let date = new Date(year, month, 0); // 지정한 연도 와 월 에 해당하는 전달 의 말일 날짜
-    let endDay = date.getDate(); // 31
-    // (2) 현재 날짜의 1일의 요일 , 1일의 시작 위치를 찾기 위해서 
-    let date2 = new Date(year, month - 1, 1); // -1 하는이유 : 컴퓨터는 0:1월 취급 
-    let startWeek = date2.getDay(); // 요일 , 0
+// 월별 출근/지각 데이터 생성 함수
+function getMonthlyData(year, month) {
+  const daysInMonth = new Date(year, month, 0).getDate(); // 월 마지막 일자
 
-    // + 각 월의 1일 전까지 공백 출력 
-    for (let blank = 1; blank <= startWeek; blank++) {
-        html2 += `<div></div>`
-    } // 
+  const 출근 = [];
+  const 지각 = [];
 
-    // + 달력의 날짜 출력 + 현재 일정도 같이 출력 
-    for (let day = 1; day <= endDay; day++) {
-        // day는 1부터 현재날짜의마지막일 까지 1씩 증가 반복 
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(year, month - 1, day);
+    const weekDay = date.getDay(); // 0:일, 6:토
 
-        // 일정 출력 
-        // 1. 현재 보고있는 날짜 형식 구성
-        let date3 = `${year}-${month}-${day}`; // 현재 반복문이 처리중인 날짜  
-        // 2. 현재 날짜와 등록된 일정날짜와 동일한 일정 찾기/검색 해서 동일하면 일정내용 출력 
-        let plenHtml = ``; // for 밖에 만든 이유 : 동일한 날짜의 2개 이상의 일정이 있을수 있으므로 누적 
-        for (let index = 0; index <= contentArray.length - 1; index++) {
-            let plan = contentArray[index];
-            if (plan.date == date3) { // 만약에 index번째의 일정객체내 날짜가 현재 보고있는 날짜와 같으면 
-                plenHtml += `<div style="color : ${plan.color}"> ${plan.content} </div>`
-            };
-        } // for end
+    if (weekDay === 0 || weekDay === 6) {
+      // 주말은 출근/지각 0으로 설정
+      출근.push(0);
+      지각.push(0);
+    } else {
+      // 월~금에 대한 패턴별 데이터 생성
+      const 출근값 = month === 5  // 5월달 출근 차트 값
+        ? [5, 10, 3, 8, 2, 15, 20][(day - 1) % 7]
+        : month === 6            // 6월달 출근 차트 값
+          ? [20, 18, 22, 25, 27][(day - 1) % 5]
+          : Math.floor(Math.random() * 30); // 5,6월 제외 한 나머지 출근 랜덤값
 
-        // 일 출력 + 일정내용 출력 
-        html2 += `<div class='dayEdit'> ${day} ${plenHtml} </div>` // 일 수정 가능
-    } // for end 
-    calBottom.innerHTML = html2;         // - 출력
-    return; // [함수 종료] 함수가 종료 되면서 반환되는 값 , 값이 없을경우 return 생략이 가능 
-} // f end 
+      const 지각값 = month === 5 // 5월달 지각 차트 값
+        ? [2, 4, 6, 1, 0, 3, 2][(day - 1) % 7]
+        : month === 6           // 6월달 지각 차트 값
+          ? [0, 1, 2, 1, 0][(day - 1) % 5]
+          : Math.floor(Math.random() * 10); // 5,6월 제외한 나머지 지각 랜덤값
 
-// [2] 월 변경함수 ( 이전달 , 다음달 ) , 실행조건 : [◀]또는[▶] 버튼을 클릭했을때 
-function monthChange(changeMonth) {  // 함수의 매개변수 : 이전달/다음달 식별데이터 , 리턴값 
-    console.log(changeMonth);
-    // 1. 매개변수에 따른 월 수정 
-    month += changeMonth;
-    // 2. // 만약에 월이 1보다 미만이면 연도를 -1차감 , 월 12 
-    if (month < 1) { year--; month = 12; }
-    // 만약에 월이 12보다 초과이면 연도를 +1증가 , 월 1
-    if (month > 12) { year++; month = 1 }
-    // - 날짜 변화에 따른 새로고침(출력함수 재실행 )
-    calPrint();
-    return; // [함수 종료] 
-} // f end 
+      출근.push(출근값);
+      지각.push(지각값);
+    }
+  }
 
-console.log(departmentList);
+  return { 출근, 지각 };
+}
+
+// 차트 초기화
+const ctx = document.getElementById('myChart');
+let myChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: [],     // x축 레이블 (날짜)
+    datasets: []    // 데이터셋 (출근, 지각)
+  },
+  options: {
+    responsive: true,
+    scales: { y: { beginAtZero: true } } // y축 0부터 시작
+  }
+});
+
+// 월 변경 함수 (이전/다음 버튼 클릭 시 실행)
+function monthChange(direction) {
+  // 방향에 따라 월 변경 (1:다음월, -1:이전월)
+  currentMonth += direction;
+
+  // 월 범위를 벗어나면 연도도 조정
+  if(currentMonth < 1) {
+    currentMonth = 12;
+    currentYear--;
+  } else if(currentMonth > 12) {
+    currentMonth = 1;
+    currentYear++;
+  }
+
+  // 달력 다시 그리기
+  calPrint();
+
+  // 새로운 월의 출근/지각 데이터로 차트 갱신
+  const days = new Date(currentYear, currentMonth, 0).getDate();
+  const newData = getMonthlyData(currentYear, currentMonth);
+
+  myChart.data.labels = Array.from({length: days}, (_, i) => (i+1).toString());
+  myChart.data.datasets = [
+    { label: '출근', data: newData.출근, borderColor: 'blue', fill: false },
+    { label: '지각', data: newData.지각, borderColor: 'red', fill: false }
+  ];
+  myChart.update();
+}
+
+// 초기 로딩 시 캘린더와 차트 표시
+window.onload = () => {
+  calPrint();       // 달력 출력
+  monthChange(0);   // 차트 초기화 (현재월 기준)
+};
+
+
+function chartEdit(){
+  getAttendaceList()
+};
