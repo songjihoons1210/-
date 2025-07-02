@@ -25,7 +25,7 @@ function testbtn() {
         return;
     }else if (member.Name === "admin"){
         alert('관리자임');
-        location.href = '../11_admin_직원관리/11_member.html';    //관리자용
+        location.href = '../11_admin_직원관리/test/11_member.html';    //관리자용
     }else {
 
     alert(`${member.Name}님, 어서오세요!`);
