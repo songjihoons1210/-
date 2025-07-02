@@ -1,24 +1,39 @@
 
-function getmemberList() {
+function getmemberList() {console.log(employee);
+    console.log(employee);
     let memberList = localStorage.getItem('memberList');
     if (memberList == null) {
         memberList = [];
     } else {
-        memberList.JSON.parse(memberList);
+        memberList = JSON.parse(memberList);
     }; return memberList;
 
 }
 
-function setmemberList(memberList) {
+function setmemberList(memberList) { console.log(employee);
     localStorage.setItem('memberList', JSON.stringify(memberList))
 }
-
-function usercode() {
+console.log(employee);
+function usercode() { console.log(employee);
     //가져오기
     const url = new URLSearchParams(location.search);
-    const staffnameInput = url.get('.staffname');
+    const employee = url.get('memberID');
+    let memberList = getmemberList();
+    for(let i = 0; i<=memberList.length-1; i++){
+        const member = memberList[i];
+        if(member.memberID == employee) {
+            document.querySelector('.employee').value = member.memberID;
+            document.querySelector('.staffname').value = member.staffname;
+            document.querySelector('.birthdate').value = member.birthdate;
+            document.querySelector('.position').value = member.position;
+            document.querySelector('.post').value = member.post;
+            document.querySelector('.email').value = member.email;
+            document.querySelector('.phonenum').value = member.phonenum;
+            break;
+        }
+    }
     /*
-    const employeeInput = document.querySelector('.employee');
+    
     const birthdateInput = document.querySelector('.birthdate');
     const positionInput = document.querySelector('.position');
     const postInput = document.querySelector('.post');
@@ -62,11 +77,11 @@ function attendMem() {
         html += `<tr>
                                 <td>${membersList.employee}</td>
                                 <td>${membersList.staffname}</td>
-                                <td>9999년99월99일${membersList.birthdate}</td>
-                                <td>영업부${membersList.position}</td>
-                                <td>이사${membersList.post}}</td>
-                                <td>010-1234-5678${membersList.phonenum}</td>
-                                <td>jh.kim@example.com${membersList.email}</td>
+                                <td>${membersList.birthdate}</td>
+                                <td>${membersList.position}</td>
+                                <td>${membersList.post}}</td>
+                                <td>${membersList.phonenum}</td>
+                                <td>${membersList.email}</td>
                                 <td><button onclick="gotowork()" class="goworkbtn">출근</button></td>
                                 <td><button class="leaveworkbtn" onclick="leaveforwork()">칼퇴</button></td>
                             </tr>`
