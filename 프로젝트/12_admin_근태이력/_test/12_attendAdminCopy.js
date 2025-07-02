@@ -1,21 +1,100 @@
+//페이지네이션====================================================================================
+// 한페이지에 표시할 행 수
+const ContentPerPage = 30;
+// 페이지 수 계산
+function pageQTY() {
+    const attendaceList = getAttendaceList()
+    let pageQTY = attendaceList.length / ContentPerPage
+
+    if (attendaceList.length % ContentPerPage == 0) {
+        return pageQTY  // 근태이력/페이지 수의 나머지가 없으면 QTY를 그대로
+    } else {
+        // 근태이력/페이지 수의 나머지가 있으면 QTY에 +1
+        pageQTY = (attendaceList.length - attendaceList.length % ContentPerPage) / ContentPerPage + 1;
+        // console.log(pageQTY)
+        return pageQTY;
+    };
+};
+
+//페이지 나누기 함수
+function divideContent() {
+    const attendaceList = getAttendaceList()        // 근태이력 불러오기
+    let pageqty = pageQTY()                         // page 수 불러오기
+    let pageContent = [];                           // page 당 콘탠츠 30개를 저장하기 위한 배열
+    const sortedList = [...attendaceList].sort((a, b) => b.attendID - a.attendID);
+    /*
+    1. [...attendaceList] — 배열 복사
+        -   ...attendaceList : 기존 배열을 복사하여 새로운 배열을 만듦
+        -   sort() :  원본 배열을 변경
+        -   원본 데이터를 보존하고 싶기 때문에 복사본을 만든 뒤 정렬
+    2. .sort((a, b) => b.attendID - a.attendID) — 정렬 기준 정의
+        -   sort() : 두 요소를 비교해서 순서를 정하는 함수 
+        -   (a, b) => b.attendID - a.attendID : attendID를 기준으로 내림차순 정렬
+    */
+
+    for (let i = 0; i < sortedList.length; i += ContentPerPage) {
+        const pageNum = Math.floor(i / ContentPerPage) + 1        //Math.floor 소수값이 존재할 때 소수값을 버리는 함수
+        const pageItems = sortedList.slice(i, i + ContentPerPage) // 30개씩 자르기
+        const pageObj = {};                                       // [{page num : [30개 씩]}, {page num : [30개 씩]}, ....]
+        pageObj[pageNum] = pageItems
+        pageContent.push(pageObj);
+    };
+    return pageContent;
+};
+
+//표 하단 페이지 버튼
+pageNumber()
+function pageNumber() {
+    let pagination = document.querySelector('.pagination')
+    let html = ``
+    let pageqty = pageQTY()
+    html += `<li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>`
+    for (let i = 1; i <= pageqty; i++) {
+        html += `<li class="page-item"><a class="page-link" href="12_attendAdminCopy.html?page=${i}">${i}</a></li>` //@@반영시 href수정필요
+    }
+    html += `<li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>`
+    pagination.innerHTML = html
+}
+
+//근태이력 조회====================================================================================
+
 AttendaceListView()
 // js가 실행되면 근태이력 AttendaceList view 실행
 function AttendaceListView() {
     // console.log('AttendaceListView exe')
     memberInfo();
+    const pageContent = divideContent()
 
     let tbody = document.querySelector('.tbody')
     let html = ``;
-    const attendaceList = getAttendaceList()
-    for (let i = attendaceList.length - 1; i >= 0; i--) {
-        let attendace = attendaceList[i]
-        html += `<tr>
-                    <td scope="row">${attendace.memberID}</td>`
 
-        let member = memberInfo(attendace.memberID)
-        // console.log(member)
-        html += `<td>${member.Name}</td>
-                        <td>${changeDepartName(member.departID)}</td>
+    //Query String
+    let url = new URLSearchParams(location.search);
+    let page = url.get('page')
+    let content = Object.values(pageContent[page - 1])
+    // Object.values: pagecontent가 {pagenum : [{},{},{}... 30개]}로 구성되어 있으므로 이중에 객체30개만 추출
+
+    for (let i = 0; i < content.length; i++) {
+        let attendaceListperPage = content[i]
+        // console.log(attendaceListperPage)
+
+        for (let j = 0; j < attendaceListperPage.length; j++) {
+            let attendace = attendaceListperPage[j]
+            // console.log(attendace)
+            html += `<tr>
+                    <td scope="row">${attendace.memberID}</td>`
+            let member = memberInfo(attendace.memberID)             // memberInfo : 사번을 매개변수로 하여 사원정보를 객체로 반환
+            // console.log(member)
+            html += `<td>${member.Name}</td>
+                        <td>${changeDepartName(member.departID)}</td>  
                         <td>${changePositionName(member.posiID)}</td>
                         <td>${attendace.date}</td>
                         <td>${attendace.attentTime}</td>
@@ -26,10 +105,16 @@ function AttendaceListView() {
                             <button type="button" class="btn btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="AttendaceViewModal(${attendace.attendID})">수정</button>
                         </td>
                     </tr>`
+                    // changeDepartName(member.departID) : 부서ID를 기반으로 부서명을 가져오는 함수
+                    // changePositionName(member.posiID) : 직급ID를 기반으로 직급명 가져오는 함수 
+                    // lateness(출근시간) : 출근시간을 기반으로 지각여부를 판단하는 함수
+                    // absence(출근시간) : 출근시간이 없다면 결근으로 판단하는 함수
+        };
     };
     tbody.innerHTML = html;
 };
 
+//근태이력 조회 관련 기타 함수====================================================================================
 // 사번을 매개변수로 하여, 이름, 부서, 직급을 조회하는 함수
 function memberInfo(memberID) {
     // console.log('memberInfo exe')
@@ -97,6 +182,7 @@ function changeDepartName(input) {
     return dapart
 };
 
+// 모달====================================================================================
 // 근태이력 수정 > 모달에 정보 표시
 function AttendaceViewModal(attendID) {
     let html = ``;
@@ -132,7 +218,7 @@ function AttendaceViewModal(attendID) {
     }
 }
 
-// 근태 이력 수정 저정
+// 모달 - 근태 이력 수정 저장
 function AttendaceUpdate(attendID) {
     const newAttentTime = document.querySelector(".modal-body > div:nth-child(6) >input").value
     const newLeaveTime = document.querySelector(".modal-body > div:nth-child(7) >input").value
@@ -160,54 +246,8 @@ function AttendaceUpdate(attendID) {
     };
 };
 
-// 출근/퇴근 시간 초기화 버튼
+// 모달 내 출근/퇴근 시간 초기화 버튼
 function valueReset(attendID) {
     document.querySelector('.modal-body > div:nth-child(6) > input').value = ''
     document.querySelector('.modal-body > div:nth-child(7) > input').value = ''
 }
-
-// 페이지네이션
-// 한페이지에 표시할 행 수
-const ContentPerPage = 30;
-// 페이지 수 계산
-function pageQTY() {
-    const attendaceList = getAttendaceList()
-    let pageQTY = attendaceList.length / ContentPerPage
-
-    if (attendaceList.length % ContentPerPage == 0) {
-        return pageQTY  // 근태이력/페이지 수의 나머지가 없으면 QTY를 그대로
-    } else {
-        // 근태이력/페이지 수의 나머지가 있으면 QTY에 +1
-        pageQTY = (attendaceList.length - attendaceList.length % ContentPerPage) / ContentPerPage + 1;
-        // console.log(pageQTY)
-        return pageQTY;
-    };
-};
-
-//페이지 나누기 함수
-function divideContent() {
-    const attendaceList = getAttendaceList()        // 근태이력 불러오기
-    let pageqty = pageQTY()                         // page 수 불러오기
-    let pageContent = [];                           // page 당 콘탠츠 30개를 저장하기 위한 배열
-    const sortedList = [...attendaceList].sort((a, b) => b.attendID - a.attendID); 
-            /*
-            1. [...attendaceList] — 배열 복사
-                -   ...attendaceList : 기존 배열을 복사하여 새로운 배열을 만듦
-                -   sort() :  원본 배열을 변경
-                -   원본 데이터를 보존하고 싶기 때문에 복사본을 만든 뒤 정렬
-            2. .sort((a, b) => b.attendID - a.attendID) — 정렬 기준 정의
-                -   sort() : 두 요소를 비교해서 순서를 정하는 함수 
-                -   (a, b) => b.attendID - a.attendID : attendID를 기준으로 내림차순 정렬
-            */
-
-    for (let i = 0; i < sortedList.length; i += ContentPerPage) {
-        const pageNum = Math.floor(i / ContentPerPage) + 1        //Math.floor 소수값이 존재할 때 소수값을 버리는 함수
-        const pageItems = sortedList.slice(i, i + ContentPerPage) // 30개씩 자르기
-        const pageObj = {};                                       // [{page num : [30개 씩]}, {page num : [30개 씩]}, ....]
-        pageObj[pageNum] = pageItems
-        pageContent.push(pageObj);
-    };
-    return pageContent;
-};
-
-
