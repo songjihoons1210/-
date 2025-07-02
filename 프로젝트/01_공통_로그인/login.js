@@ -12,8 +12,8 @@ function getMemberList() {
 function testbtn() {
     const loginInput = document.querySelector('.login');
     const passwordInput = document.querySelector('.password');
-    const login = loginInput.value.trim();
-    const pass = passwordInput.value.trim();
+    const login = loginInput.value;
+    const pass = passwordInput.value;
 
     const members = getMemberList();
 
@@ -23,10 +23,14 @@ function testbtn() {
     if (!member) {
         alert('로그인 정보가 올바르지 않습니다.');
         return;
+    }else if (member.Name === "admin"){
+        alert('관리자임');
+        location.href = '../11_admin_직원관리/11_member.html';    //관리자용
+    }else {
+
+    alert(`${member.Name}님, 어서오세요!`);
+    location.href = `../21_user_근태이력/attendMember.html?memberID=${login}`;  //일반 페이지
     }
 
-
-    alert(`${member.Name}님, 출근!`);
-    location.href = '../21_user_근태이력/attendMember.html';
 }
 
