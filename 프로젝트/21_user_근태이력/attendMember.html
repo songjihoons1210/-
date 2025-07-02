@@ -54,6 +54,9 @@
             box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
             margin-top: 30px;
         }
+        .이응{
+            display: flex; justify-content: space-between; 
+        }
     </style>
 </head>
 
@@ -69,19 +72,24 @@
                     <a href="" role="button" class="btn btn-outline-dark col menubutton">대시보드</a>
                 </div>
             </div>
-        </div><!--header end-->ㅁ
+        </div><!--header end-->
 
         <div id="main" class="container"> <!--main-->
             <div class="content"><!--content1-->
                 <h4>사용자 정보</h4>
-                <div onclick="usercode()"> <!--사원 정보-->
-                    <input class="staffname" disabled="" placeholder="이름 : " /> <!--이름~부서 변경 불가 disabled--> 
-                    <input class="employee" type="number" disabled="" placeholder="사번 : " /> <br/>
-                    <input class="birthdate" disabled="" placeholder="생년월일 : " />
-                    <input class="position" disabled="" placeholder="직급 : " /> <br/>
-                    <input class="post" disabled="" placeholder="부서 : " />
-                    <input class="email" type="text" disabled="" placeholder="email@naver.com " /> <br/>
-                    <input class="phonenum" type="text" disabled="" placeholder="ex) 010-1234-5678" />
+                <div class="이응">
+                    <div onclick="usercode()"> <!--사원 정보-->
+                        <input class="staffname" disabled="" placeholder="이름 : " /> <!--이름~부서 변경 불가 disabled-->
+                        <input class="employee" type="number" disabled="" placeholder="사번 : " /> <br />
+                        <input class="birthdate" disabled="" placeholder="생년월일 : " />
+                        <input class="position" disabled="" placeholder="직급 : " /> <br />
+                        <input class="post" disabled="" placeholder="부서 : " />
+                        <input class="email" type="text" disabled="" placeholder="email@naver.com " /> <br />
+                        <input class="phonenum" type="text" disabled="" placeholder="ex) 010-1234-5678" />
+                    </div>
+                    <div>
+                        <img src="bono.png" />
+                    </div>
                 </div>
             </div><!--content1 end-->
             <div class="content"> <!--content2-->
