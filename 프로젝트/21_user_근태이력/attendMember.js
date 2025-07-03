@@ -33,39 +33,22 @@ function usercode() {
             break;
         }
     }
-    /*
-    
-    const birthdateInput = document.querySelector('.birthdate');
-    const positionInput = document.querySelector('.position');
-    const postInput = document.querySelector('.post');
-    const emailInput = document.querySelector('.email');
-    const phonenumInput = document.querySelector('.phonenum');
-
-    const obj = {
-        staffname: staffname,
-        employee: Number(employee),
-        birthdate: birthdate,
-        position: position,
-        post: Number(post),
-        email: email,
-        phonenum: Number(phonenum),
-    };
-
-    let memberList = getmemberList();
-
-    // 초기
-    const staffname = staffnameInput.value;
-    const employee = employeeInput.value;
-    const birthdate = birthdateInput.value;
-    const position = positionInput.value;
-    const post = postInput.value;
-    const email = emailInput.value;
-    const phonenum = phonenumInput.value;
-
-    alert('일단 출근');
-    memberList.push(obj);
-    setmemberList(memberList);
-    */
-    attendMem();
 }
 
+function gotowork() { console.log('출근')
+    const url = new URLSearchParams(location.search);
+    const employee = url.get('memberID');
+    let memberList = getmemberList();
+    for(let i = 0 ; i <= memberList.length-1; i++){
+        const member = memberList[i];
+        if(member.memberID == employee) {
+            document.querySelector('.staffname').value = member.Name;
+            document.querySelector('.position').value = member.posiID;
+            document.querySelector('.post').value = member.departID;
+        }
+        
+    }
+}
+
+
+  

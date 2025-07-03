@@ -86,10 +86,10 @@
                         <input class="staffname" disabled placeholder="이름" /> <!--이름~부서 변경 불가 disabled-->
                         <input class="employee" type="text" disabled placeholder="사번 : " /> <br />
                         <input class="birthdate" disabled placeholder="생년월일 : " />
-                        <input class="position" disabled placeholder="직급 : " /> <br />
+                        <input class="position" type="text" disabled placeholder="직급 : " /> <br />
                         <input class="post" disabled placeholder="부서 : " />
                         <input class="email" type="text" disabled placeholder="email@naver.com " /> <br />
-                        <input class="phonenum" type="text" disabled placeholder="ex) 010-1234-5678" />
+                        <input class="phonenum" type="number" disabled placeholder="ex) 010-1234-5678" />
                         <div>
                         <button onclick="gotowork()" class="goworkbtn">출근</button>
                         <button class="leaveworkbtn">퇴근</button>
@@ -112,7 +112,6 @@
                                 <th>날짜</th>
                                 <th>출근시간</th>
                                 <th>퇴근시간</th>
-                                <th>비고</th>
                             </tr>
                         </thead>
                         <tbody class="attendance">
@@ -123,8 +122,6 @@
                                 <td>26-07-03</td>
                                 <td>09:15</td>
                                 <td>18:00</td>
-                                <td>지각</td>
-
                             </tr>
                         </tbody>
                     </table>
