@@ -19,7 +19,7 @@
             font-family: 'Noto Sans:ital';
             font-weight: 400;
             max-width: 1280px;
-            margin: 10px auto;
+            margin: 0px auto;
 
             /* border: 1px red solid; */
         }
@@ -35,9 +35,8 @@
             background-color: #ffffff;
             padding: 35px 30px;
             border-radius: 20px;
+            margin: 10px auto;
             box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
-
-
         }
 
         .menubutton {
@@ -63,7 +62,7 @@
             /* 하위 요소들을 배치 */
             align-items: center;
             justify-content: center;
-
+            margin: 20px;
         }
 
         #calTop>h4 {
@@ -74,14 +73,14 @@
         #calTop>button {
             background-color: white;
             border: none;
-        
         }
-        .bibi-caret-left-square{
+
+        .bibi-caret-left-square {
             width: 30px;
             height: 28.8px;
         }
 
-        .bibi-caret-right-square{
+        .bibi-caret-right-square {
             width: 30px;
             height: 28.8px;
         }
@@ -101,43 +100,42 @@
             width: 14.2%;
             margin: 0px 0px;
             /* 가로사이즈 : 부모요소의 가로사이즈 100% 의 7등분 */
-            height: 70px;
+            height: 4.5rem;
             /* 일일  상자 세로사이즈 */
-            font-size: 10px;
-            border-bottom: solid 3px black;
+            border-bottom: solid 1px #A6A6A6;
         }
 
         #calBottom>.week {
             height: 50px;
-            background-color: #d9d9d9;
+            background-color: #eeeeee;
             text-align: center;
             font-size: 22px;
             font-weight: bold;
-            border-top: solid 5px black;
-            border-bottom: solid 5px black;
+            border-top: solid 3px black;
+            border-bottom: solid 3px black;
 
         }
 
         #calBottom>.sunday {
-            background-color: #d9d9d9;
+            background-color: #eeeeee;
             color: red;
-            border-top: solid 5px black;
-            border-bottom: solid 5px black;
+            border-top: solid 3px black;
+            border-bottom: solid 3px black;
             ;
         }
 
         #calBottom>.thuday {
-            background-color: #d9d9d9;
+            background-color: #eeeeee;
             color: blue;
-            border-top: solid 5px black;
-            border-bottom: solid 5px black;
+            border-top: solid 3px black;
+            border-bottom: solid 3px black;
             ;
         }
 
         .dayEdit,
         .dayEdit div {
             font-size: 14px !important;
-            font-weight: bold;
+            font-weight: 500;
             padding-left: 10px;
         }
 
@@ -148,11 +146,17 @@
         .chart h4 {
             text-align: center;
             font-weight: bold;
-
+            margin: 40px 0px 20px 0px;
         }
 
         #myChart {
             width: 100%;
+        }
+
+        .logout {
+            float: right;
+            border-radius: 0.375rem;
+            margin-right: 15px;
         }
     </style>
 </head>
@@ -162,14 +166,18 @@
     <div id="wrap"> <!--wrap-->
         <div id="header" class="container text-center"> <!--header-->
             <div class="row">
-                <img id="attndancelogo" class="col-3" src="https://pbs.twimg.com/media/Gu5KDf8WgAAGjG5?format=png&name=900x900">
+                <img id="attndancelogo" class="col-3"
+                    src="https://pbs.twimg.com/media/Gu5KDf8WgAAGjG5?format=png&name=900x900">
                 <div id="menuBar" class=" col-9 container row">
-                    <a href="../11_admin_직원관리/11_member.html" role="button"
+                    <a href="../11_admin_직원관리/test/11_member.html" role="button"
                         class="btn btn-outline-dark col menubutton">사원관리</a>
                     <!-- 풀 후 변경 <a href="../11_admin_직원관리/test/11_member.html" role="button" class="btn btn-outline-dark col menubutton">사원관리</a> -->
                     <a href="../12_admin_근태이력/12_attendAdmin.html?page=1" role="button"
                         class="btn btn-outline-dark col menubutton">근태이력</a>
                     <a href="Calendar.html" role="button" class="btn btn-outline-dark col menubutton">캘린더</a>
+                </div>
+                <div>
+                    <button class="btn btn-danger logout" onclick="logout()">로그아웃</button>
                 </div>
             </div>
         </div><!--header end-->
