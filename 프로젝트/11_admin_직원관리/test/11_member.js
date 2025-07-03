@@ -247,3 +247,7 @@ function updateMember(memberID) {
     }
 }
 
+function logout() {
+    alert("로그아웃 되었습니다.")
+    location.href="../../01_공통_로그인/login.html"
+}
