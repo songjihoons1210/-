@@ -1,3 +1,4 @@
+
 function getMemberList() {
     let memberList = localStorage.getItem('memberList');
 

@@ -70,6 +70,7 @@ function usercode() {
 }
 
 function attendMem() {
+    console.log('asd')
     const attendance = document.querySelector('.attendance');
     const memberList = getmemberList();
     let html = [];

@@ -132,7 +132,7 @@ function setHolidayList(holidayList) {
 
 const memberList = [
     { memberID: 50000, Name: 'admin', Birthday: '2020-03-01', Call: '010-0000-0000', Email: 'exam@example.com', posiID: 10050, departID: 30050, pwd: 'qwer1234' },
-    { memberID: 50001, Name: '김지훈', Birthday: '1986-03-14', Call: '010-2453-6874', Email: 'jh.kim@example.com', posiID: 10003, departID: 30004, pwd: '50001a30004' },
+    { memberID: 50001, Name: '김지훈', Birthday: '1986-03-14', Call: '010-2453-6874', Email: 'jh.kim@example.com', posiID: 10003, departID: 30004, pwd: 'a' },
     { memberID: 50002, Name: '이수연', Birthday: '1990-07-22', Call: '010-3384-2091', Email: 'sy.lee@example.com', posiID: 10006, departID: 30001, pwd: '50002a30001' },
     { memberID: 50003, Name: '박민준', Birthday: '1984-01-11', Call: '010-7732-1125', Email: 'mj.park@example.com', posiID: 10001, departID: 30001, pwd: '50003a30001' },
     { memberID: 50004, Name: '정예린', Birthday: '1993-09-30', Call: '010-4556-9881', Email: 'yr.jung@example.com', posiID: 10009, departID: 30003, pwd: '50004a30003' },
@@ -191,7 +191,7 @@ const attendaceList = [
     { attendID: 100004, memberID: 50004, date: '2025-05-01', attentTime: '08:52', leaveTime: '18:01' },
     { attendID: 100005, memberID: 50005, date: '2025-05-01', attentTime: '09:05', leaveTime: '18:29' },
     { attendID: 100006, memberID: 50006, date: '2025-05-01', attentTime: '08:37', leaveTime: '18:03' },
-    { attendID: 100007, memberID: 50007, date: '2025-05-01', attentTime: '08:55', leaveTime: '18:19' },
+    { attendID: 100007, memberID: 50007, date: '2025-05-01', attentTime: '08:55', leaveTime: '18:19' },  
     { attendID: 100008, memberID: 50008, date: '2025-05-01', attentTime: '08:57', leaveTime: '18:10' },
     { attendID: 100009, memberID: 50009, date: '2025-05-01', attentTime: '08:37', leaveTime: '18:29' },
     { attendID: 100010, memberID: 50010, date: '2025-05-01', attentTime: '08:37', leaveTime: '18:25' },
@@ -799,3 +799,8 @@ function setAttendaceList(attendaceList) {
     localStorage.setItem('attendaceList', JSON.stringify(attendaceList));
 };
 
+setProductsList(positionList)
+setDepartmentList(departmentList)
+setHolidayList(holidayList)
+setMemberList(memberList)
+setAttendaceList(attendaceList)
