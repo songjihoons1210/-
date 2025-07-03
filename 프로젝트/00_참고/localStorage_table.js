@@ -804,7 +804,7 @@ const attendaceList = [
     { attendID: 100623, memberID: 50013, date: '2025-07-02', attentTime: '08:43', leaveTime: '18:18' },
     { attendID: 100624, memberID: 50014, date: '2025-07-02', attentTime: '08:44', leaveTime: '18:09' },
     { attendID: 100625, memberID: 50015, date: '2025-07-02', attentTime: '08:44', leaveTime: '18:08' },
-    { attendID: 100626, memberID: 50001, date: '2025-07-03', attentTime: '08:33', leaveTime: '18:09' },
+    { attendID: 100626, memberID: 50001, date: '2025-07-03', attentTime: '', leaveTime: '18:09' },
     { attendID: 100627, memberID: 50002, date: '2025-07-03', attentTime: '08:42', leaveTime: '18:10' },
     { attendID: 100628, memberID: 50003, date: '2025-07-03', attentTime: '08:41', leaveTime: '18:22' },
     { attendID: 100629, memberID: 50004, date: '2025-07-03', attentTime: '08:37', leaveTime: '18:09' },
@@ -842,4 +842,4 @@ function setAttendaceList(attendaceList) {
 // setDepartmentList(departmentList)
 // setHolidayList(holidayList)
 // setMemberList(memberList)
-// setAttendaceList(attendaceList)
+//  setAttendaceList(attendaceList)
