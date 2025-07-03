@@ -1,8 +1,40 @@
 MemberListView()
+// 1.3. 직급id <-> 직급 이름 변환 함수
+function changePositionName(input) {
+    const positionList = getPositionList();
+    let posi = '';
+    for (let i = 0; i < positionList.length; i++) {
+        let position = positionList[i];
+        if (position.posiID == input) {
+            posi = position.posiName
+        }
+        else if (position.posiName == input) {
+            posi = position.posiID
+        };
+    };
+    return posi
+};
 
+// 2.3. 부서id <-> 부서 이름 변환 함수
+function changeDepartName(input) {
+    const departmentList = getDepartmentList()
+    let dapart = '';
+    for (let i = 0; i < departmentList.length; i++) {
+        let department = departmentList[i];
+        if (department.departID == input) {
+            dapart = department.departName
+        }
+        else if (department.departName == input) {
+            dapart = department.departID
+        };
+    };
+    return dapart
+};
+
+// 사원 정보 조회
 function MemberListView() {
     let tbody = document.querySelector('.tbody')
-    let html = ``;    
+    let html = ``;
     const MemberList = getMemberList()
     for (let i = 0; i <= MemberList.length - 1; i++) {
         let member = MemberList[i]
@@ -10,13 +42,13 @@ function MemberListView() {
                         <td scope="row">${member.memberID}</td>
                         <td>${member.Name}</td>
                         <td>${member.Birthday}</td>
-                        <td>${member.departID}</td>
-                        <td>${member.posiID}</td>
+                        <td>${changeDepartName(member.departID)}</td>
+                        <td>${changePositionName(member.posiID)}</td>
                         <td>${member.Call}</td>
                         <td>${member.Email}</td>
                         <td>
-                        <button type="button" class="btn btn-primary btn-sm" onclick="editEmployee(${member.memberID}, this)">수정</button>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteEmployee(${member.memberID}, this)">삭제</button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#updateMemberModal" class="btn btn-primary btn-sm" onclick=updateViewMember(${member.memberID})>수정</button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="deletMember(${member.memberID})">삭제</button>
                         </td>
                         </tr>`
     };
@@ -43,142 +75,175 @@ for (let i = 1; i < PositionList.length; i++) {
 }
 posiSelect.innerHTML = html_posi
 
-// 신규직원 저장
-function saveNewMember(){
+// 신규사원 저장 ==========================================
+function saveNewMember() {
     const MemberList = getMemberList()
+    let memberID = 0;
     if (MemberList.length == 0) {
-        memberID = 1
-    } else (
+        memberID = 1;
+    } else {
         memberID = MemberList[MemberList.length - 1].memberID + 1
-    )
-
-    for (let i = 0 ; i < MemberList.length; i++){
-
     }
-    // memberID	Name	Birthday	Call	Email	posiID	departID	pwd
+    const newName = document.querySelector('.modal-body1 > div:nth-child(2) input').value
+    const newBirthday = document.querySelector('.modal-body1 > div:nth-child(3) input').value
+    const newCall = document.querySelector('.modal-body1 > div:nth-child(4) input').value
+    const newEmail = document.querySelector('.modal-body1 > div:nth-child(5) input').value
+    const newdepartID = document.querySelector('.modal-body1 > div:nth-child(6) select').value
+    const newposiID = document.querySelector('.modal-body1 > div:nth-child(7) select').value
+
+    const newMember = {
+        memberID: Number(memberID),
+        Name: newName,
+        Birthday: newBirthday,
+        Call: newCall,
+        Email: newEmail,
+        posiID: Number(newposiID),
+        departID: Number(newdepartID),
+        pwd: "1234"
+    }
+    // console.log(newMember)
+
+    alert("신규 사원 정보가 저장되었습니다.")
+    MemberList.push(newMember)
+    setMemberList(MemberList)
+    MemberListView()
 }
 
-// 삭제
-function deleteMember(id, btn) {
-    const index = memberList.findIndex(m => member.memberID == id);
-    if (index == -1) return;
-
-    memberList.splice(index, 1);
-    setMemberList(memberList);
-    renderMemberList();
+// 사원 삭제 ===============================
+function deletMember(memberID) {
+    const memberList = getMemberList()
+    for (let i = 0; i < memberList.length; i++) {
+        if (memberList[i].memberID == memberID) {
+            memberList.splice(i, 1)
+            alert("사원 정보가 삭제되었습니다.")
+            setMemberList(memberList)
+            MemberListView()
+            return
+        }
+    }
 }
 
+// 사원 수정 - 1 정보 입력 =================================
+function updateViewMember(memberID) {
+    let html_updateMember = ``
+    let content = document.querySelector(".Membermodal")
+    // console.log(memberID)
+    // console.log(content.innerHTML)
 
+    const memberList = getMemberList()
+    for (let i = 0; memberList.length; i++) {
+        const member = memberList[i]
+        if (member.memberID == memberID) {
 
-// // 1. 초기 데이터 로드 & 다음 memberID 계산
-// let memberList = getMemberList();
-// let nextMemberID = memberList.length > 0 ? Math.max(...memberList.map(m => Number(m.memberID))) + 1 : 50001;
+            // 모달 내의 직급을 표시하기 위해
+            let posiSelect = document.querySelector('.posiSelect')
+            const PositionList = getPositionList()
+            let html_posi = ``
+            for (let i = 1; i < PositionList.length; i++) {
+                position = PositionList[i]
+                if (member.posiID == position.posiID) {
+                    html_posi += `<option value=${position.posiID} selected>${position.posiName}</option>`
+                } else {
+                    html_posi += `<option value=${position.posiID} >${position.posiName}</option>`
+                };
+            };
 
-// // 2.렌더링 함수
-// function renderMemberList() {
-//     const tbody = document.querySelector('.tbody');
-//     let html = '';
+            // 모달 내의 부서를 표시하기 위해
+            let departSelect = document.querySelector('.departSelect')
+            const DepartmentList = getDepartmentList()
+            let html_depart = ``
+            for (let i = 1; i < DepartmentList.length; i++) {
+                Department = DepartmentList[i]
+                if (member.departID == Department.departID) {
+                    html_depart += `<option value=${Department.departID} selected>${Department.departName}</option>`
+                } else {
+                    html_depart += `<option value=${Department.departID}>${Department.departName}</option>`
+                }
+            }
+            // selected : 그 옵션이 선택되어서 표시
 
-//     memberList.forEach(member => {
-//         html += `
-//         <tr>
-//             <td>${member.memberID}</td>
-//             <td>${member.Name}</td>
-//             <td>${member.Birthday}</td>
-//             <td>${member.departID}</td>
-//             <td>${member.posiID}</td>
-//             <td>${member.Call}</td>
-//             <td>${member.Email}</td>
-//             <td>
-//                 <button class="btn btn-primary btn-sm" onclick="editMember(${member.memberID}, this)">수정</button>
-//                 <button class="btn btn-danger btn-sm" onclick="deleteMember(${member.memberID}, this)">삭제</button>
-//             </td>
-//         </tr>
-//         `;
-//     });
+            html_updateMember += `
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">사원 정보 수정</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body2">
+                    <div>
+                        <label for="recipient-name" class="col-form-label">사번</label> 
+                        <input class="form-control" id="recipient-name"  type="number" value="${member.memberID}" disabled /> 
+                    </div>
+                    <div>
+                        <label for="recipient-name" class="col-form-label">이름</label> 
+                        <input class="form-control" id="recipient-name" type="text" value="${member.Name}"/>
+                    </div>
+                    <div>
+                        <label for="recipient-name" class="col-form-label">생년월일</label> 
+                        <input class="form-control" id="recipient-name" type="date"  value="${member.Birthday}"/>
+                    </div>
+                    <div>
+                        <label for="recipient-name" class="col-form-label">연락처</label> 
+                        <input class="form-control" id="recipient-name" type="text" value="${member.Call}"/>
+                    </div>
+                    <div>
+                        <label for="recipient-name" class="col-form-label">이메일</label> 
+                        <input class="form-control" id="recipient-name" type="text" value="${member.Email}"/>
+                    </div>
+                    <div>
+                        <label for="recipient-name" class="col-form-label">부서</label> 
+                        <select class="departSelect" class="form-control" id="recipient-name">${html_depart}</select>
+                    </div>
+                    <div>
+                        <label for="recipient-name" class="col-form-label">직급</label> 
+                        <select class="posiSelect" class="form-control" id="recipient-name">${html_posi}</select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" onclick="updateMember(${member.memberID})" data-bs-dismiss="modal">저장</button>
+                </div>`
 
-//     tbody.innerHTML = html;
-// }
+            // value="${member.departID}"
+            //value="${member.posiID}"
+            content.innerHTML = html_updateMember
+            return;
+        }
+    }
+}
 
-// // 3. 신규 멤버 추가
-// document.querySelector('.newmember').addEventListener('click', () => {
-//     const newMember = {
-//         memberID: nextMemberID++,
-//         Name: '이름',
-//         Birthday: '생년월일',
-//         departID: '부서',
-//         posiID: '직급',
-//         Call: '연락처',
-//         Email: '이메일'
-//     };
-//     memberList.push(newMember);
-//     setMemberList(memberList);
-//     renderMemberList();
-// });
+// 사원 수정 - 2 정보 저장 =================================
+function updateMember(memberID) {
+    // console.log('updateMember exe')
+    // console.log(memberID)
 
-// // 4. 수정 모드
-// function editMember(id, btn) {
-//     const index = memberList.findIndex(m => m.memberID === id);
-//     if (index == -1) return;
+    const memberList = getMemberList()
 
-//     const member = memberList[index];
-//     const tr = btn.closest('tr');
+    const reName = document.querySelector('.modal-body2 > div:nth-child(2) input').value
+    const reBirthday = document.querySelector('.modal-body2 > div:nth-child(3) input').value
+    const reCall = document.querySelector('.modal-body2 > div:nth-child(4) input').value
+    const reEmail = document.querySelector('.modal-body2 > div:nth-child(5) input').value
+    const redepartID = document.querySelector('.modal-body2 > div:nth-child(6) select').value
+    const reposiID = document.querySelector('.modal-body2 > div:nth-child(7) select').value
 
-//     tr.innerHTML = `
-//         <td>${member.memberID}</td>
-//         <td><input value="${member.Name}"></td>
-//         <td><input value="${member.Birthday}"></td>
-//         <td><input value="${member.departID}"></td>
-//         <td><input value="${member.posiID}"></td>
-//         <td><input value="${member.Call}"></td>
-//         <td><input value="${member.Email}"></td>
-//         <td>
-//         <button class="btn btn-success btn-sm" onclick="saveMember(${member.memberID}, this)">저장</button>
-//         <button class="btn btn-secondary btn-sm" onclick="cancelEdit()">취소</button>
-//         </td>
-//     `;
-// }
+    // console.log(reName,reBirthday,reCall,reEmail,redepartID,reposiID)
 
-// // 5. 저장 모드
-// function saveMember(id, btn) {
-//     const index = memberList.findIndex(m => m.memberID === id);
-//     if (index == -1) return;
+    for (let i = 0 ; i < memberList.length ; i++ ){
+        let member = memberList[i]
 
-//     const tr = btn.closest('tr');
-//     const inputs = tr.querySelectorAll('input');
+        if (member.memberID == memberID){
 
-//     memberList[index] = {
-//         memberID: id,
-//         Name: inputs[0].value.trim(),
-//         Birthday: inputs[1].value.trim(),
-//         departID: inputs[2].value.trim(),
-//         posiID: inputs[3].value.trim(),
-//         Call: inputs[4].value.trim(),
-//         Email: inputs[5].value.trim()
-//     };
+            member.Name = reName
+            member.Birthday = reBirthday
+            member.Call = reCall
+            member.Email = reEmail
+            member.departID = Number(redepartID)
+            member.posiID = Number(reposiID)
 
-//     setMemberList(memberList);
-//     renderMemberList();
-// }
+            alert("사원 정보가 수정되었습니다.")
+            
+            setMemberList(memberList)
+            MemberListView()
+            return;
+        }
+    }
+}
 
-// // 6. 수정 취소
-// function cancelEdit() {
-//     renderMemberList();
-// }
-
-
-
-// // 8. 로컬스토리지 저장 및 불러오기 함수 (공통 함수로 따로 빼도 됨)
-// function getMemberList() {
-//     let list = localStorage.getItem('memberList');
-//     return list ? JSON.parse(list) : [];
-// }
-
-// function setMemberList(list) {
-//     localStorage.setItem('memberList', JSON.stringify(list));
-// }
-
-// // 9. 페이지 로딩시 초기 렌더링
-// window.addEventListener('DOMContentLoaded', () => {
-//     renderMemberList();
-// });
