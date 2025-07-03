@@ -1,3 +1,5 @@
+let employee = JSON.parse(localStorage.getItem('login_memberID'))
+
 
 function getmemberList() {
 
@@ -17,8 +19,8 @@ function setmemberList(memberList) {
 usercode();
 function usercode() {
     //가져오기
-    const url = new URLSearchParams(location.search);
-    const employee = url.get('memberID');
+    // const url = new URLSearchParams(location.search);
+    // const employee = url.get('memberID');
     let memberList = getmemberList();
     for (let i = 0; i < memberList.length; i++) {
         const member = memberList[i];
@@ -34,11 +36,12 @@ function usercode() {
         }
     }
 }
+
 attendMem();
 function attendMem() {
-    const url = new URLSearchParams(location.search);
-    const employee = url.get('memberID');
-    console.log(employee)
+    // const url = new URLSearchParams(location.search);
+    // const employee = url.get('memberID');
+    // console.log(employee)
 
     const attendanceTable = document.querySelector('.attendanceTable');
     const attendaceList = getAttendaceList();
@@ -62,9 +65,9 @@ function attendMem() {
 
 function gotowork() {
     console.log('출근');
-    const url = new URLSearchParams(location.search);
-    const employee = Number(url.get('memberID'));
-
+    // const url = new URLSearchParams(location.search);
+    // const employee = Number(url.get('memberID'));
+    console.log(employee)
 
     let year = new Date().getFullYear(); // 연도 구함
     let month = new Date().getMonth() + 1; // 달
@@ -89,17 +92,20 @@ function gotowork() {
     let attendace = getAttendaceList();
     for (let i = 0; i < attendaceList.length; i++) {
         attendace = attendaceList[i];
-        console.log(attendace.attentTime);
-
+        // console.log(attendace.attentTime);
 
         if (employee == attendace.memberID && attendace.date == equals) {
-            // console.log(attendace.leaveTime)
-            attendace.attentTime = time
-            console.log(attendace);
-            setAttendaceList(attendaceList);
-            attendMem();
-            alert('출근완료');
-            return;
+            if (attendace.attentTime == "") {
+                console.log(attendace)
+                attendace.attentTime = time
+                console.log(attendace);
+                setAttendaceList(attendaceList);
+                attendMem();
+                alert('출근완료');
+                return;
+            } else {
+                alert(`\n 이미 등록된 출근 정보가 있습니다. \n (※ 출근 정보 수정이 있을 경우 관리자에게 문의해주시기 바랍니다.)`)
+            }
         }
 
 
@@ -143,7 +149,7 @@ function changeDepartName(input) {
 function lateness(attentTime) {
     let lateness = ''
     if (attentTime > "09:10") {
-        lateness = '지각'
+        lateness = `<span style="color : red">지각</span>`
     } else {
         lateness = ''
     }
@@ -154,7 +160,7 @@ function lateness(attentTime) {
 function absence(attentTime) {
     let absence = ''
     if (attentTime == '') {
-        absence = "결근";
+        absence = `<span style="color : red">결근</span>`;
     }
     return absence
 }
