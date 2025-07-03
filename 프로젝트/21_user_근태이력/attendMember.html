@@ -20,7 +20,7 @@
             font-weight: 400;
             max-width: 1280px;
             margin: 0 auto;
-        
+        border: 1px red solid;
             /* border: 1px red solid; */
         }
 
@@ -60,7 +60,9 @@
         .staf{ margin-top: 100px;}
         .staf >input {margin: 5px 5px 5px 5px;}
         .btn{display: flex; justify-content: center; }
-        .btn > button{margin: 50px 50px 10px 55px; width: 130px; height: 40px; background-color: #163e64; color: white; border-radius: 10PX; ; box-shadow: 3px 3px 3px gray;}  /*x축 y축 흐림정도*/ 
+        .goworkbtn , .leaveworkbtn {margin: 50px 50px 10px 55px; width: 130px; height: 40px; background-color: #163e64; color: white; border-radius: 10PX; ; box-shadow: 3px 3px 3px gray;}  /*x축 y축 흐림정도*/ 
+        .thead > tr >th{vertical-align: middle; padding: 10px ; text-align: center;}
+        .attendance > tr> td{ padding: 10px ; text-align: center;}
     </style>
 </head>
 
@@ -89,7 +91,7 @@
                         <input class="email" type="text" disabled placeholder="email@naver.com " /> <br />
                         <input class="phonenum" type="text" disabled placeholder="ex) 010-1234-5678" />
                         <div>
-                            <button onclick="gotowork()" class="goworkbtn">출근</button>
+                        <button onclick="gotowork()" class="goworkbtn">출근</button>
                         <button class="leaveworkbtn">퇴근</button>
                         </div>
                     </div>
@@ -102,28 +104,27 @@
                 <h4>사용자 목록</h4>
                 <div>
                     <table>
-                        <thead>
+                        <thead class="thead">
                             <tr>
-                                <th>사번</th>
                                 <th>이름</th>
-                                <th>생년월일</th>
                                 <th>직급</th>
                                 <th>부서</th>
-                                <th>연락처</th>
-                                <th>이메일</th>
+                                <th>날짜</th>
+                                <th>출근시간</th>
+                                <th>퇴근시간</th>
                                 <th>비고</th>
                             </tr>
                         </thead>
                         <tbody class="attendance">
                             <tr>
-                                <td>50001</td>
                                 <td>김지훈</td>
-                                <td>9999년99월99일</td>
-                                <td>영업부</td>
                                 <td>이사</td>
-                                <td>010-1234-5678</td>
-                                <td>jh.kim@example.com</td>
-                                
+                                <td>영업부</td>
+                                <td>26-07-03</td>
+                                <td>09:15</td>
+                                <td>18:00</td>
+                                <td>지각</td>
+
                             </tr>
                         </tbody>
                     </table>
