@@ -1,9 +1,3 @@
-// setProductsList(positionList)
-// setDepartmentList(departmentList)
-// setHolidayList(holidayList)
-// setMemberList(memberList)
-// setAttendaceList(attendaceList)
-
 // 공통 table 및 공통 function 정의
 
 // 1. 직급 리스트 =======================================
@@ -33,7 +27,7 @@ function getPositionList() {
 };
 
 // 1.2. set 직급 리스트
-function setProductsList(positionList) {
+function setPositionList(positionList) {
     localStorage.setItem('positionList', JSON.stringify(positionList));
 };
 
@@ -132,7 +126,7 @@ function setHolidayList(holidayList) {
 
 const memberList = [
     { memberID: 50000, Name: 'admin', Birthday: '2020-03-01', Call: '010-0000-0000', Email: 'exam@example.com', posiID: 10050, departID: 30050, pwd: 'qwer1234' },
-    { memberID: 50001, Name: '김지훈', Birthday: '1986-03-14', Call: '010-2453-6874', Email: 'jh.kim@example.com', posiID: 10003, departID: 30004, pwd: '50001a30004' },
+    { memberID: 50001, Name: '김지훈', Birthday: '1986-03-14', Call: '010-2453-6874', Email: 'jh.kim@example.com', posiID: 10003, departID: 30004, pwd: 'a' },
     { memberID: 50002, Name: '이수연', Birthday: '1990-07-22', Call: '010-3384-2091', Email: 'sy.lee@example.com', posiID: 10006, departID: 30001, pwd: '50002a30001' },
     { memberID: 50003, Name: '박민준', Birthday: '1984-01-11', Call: '010-7732-1125', Email: 'mj.park@example.com', posiID: 10001, departID: 30001, pwd: '50003a30001' },
     { memberID: 50004, Name: '정예린', Birthday: '1993-09-30', Call: '010-4556-9881', Email: 'yr.jung@example.com', posiID: 10009, departID: 30003, pwd: '50004a30003' },
@@ -191,7 +185,7 @@ const attendaceList = [
     { attendID: 100004, memberID: 50004, date: '2025-05-01', attentTime: '08:52', leaveTime: '18:01' },
     { attendID: 100005, memberID: 50005, date: '2025-05-01', attentTime: '09:05', leaveTime: '18:29' },
     { attendID: 100006, memberID: 50006, date: '2025-05-01', attentTime: '08:37', leaveTime: '18:03' },
-    { attendID: 100007, memberID: 50007, date: '2025-05-01', attentTime: '08:55', leaveTime: '18:19' },
+    { attendID: 100007, memberID: 50007, date: '2025-05-01', attentTime: '08:55', leaveTime: '18:19' },  
     { attendID: 100008, memberID: 50008, date: '2025-05-01', attentTime: '08:57', leaveTime: '18:10' },
     { attendID: 100009, memberID: 50009, date: '2025-05-01', attentTime: '08:37', leaveTime: '18:29' },
     { attendID: 100010, memberID: 50010, date: '2025-05-01', attentTime: '08:37', leaveTime: '18:25' },
@@ -778,8 +772,53 @@ const attendaceList = [
     { attendID: 100591, memberID: 50011, date: '2025-06-30', attentTime: '08:40', leaveTime: '18:39' },
     { attendID: 100592, memberID: 50012, date: '2025-06-30', attentTime: '09:25', leaveTime: '18:10' },
     { attendID: 100593, memberID: 50013, date: '2025-06-30', attentTime: '08:33', leaveTime: '18:07' },
-    { attendID: 100594, memberID: 50014, date: '2025-06-30', attentTime:'' , leaveTime: ''},
-    { attendID: 100595, memberID: 50015, date: '2025-06-30', attentTime: '08:56', leaveTime: '18:36' }
+    { attendID: 100594, memberID: 50014, date: '2025-06-30', attentTime: '', leaveTime: '' },
+    { attendID: 100595, memberID: 50015, date: '2025-06-30', attentTime: '08:56', leaveTime: '18:36' },
+    { attendID: 100596, memberID: 50001, date: '2025-07-01', attentTime: '08:48', leaveTime: '18:01' },
+    { attendID: 100597, memberID: 50002, date: '2025-07-01', attentTime: '08:38', leaveTime: '18:24' },
+    { attendID: 100598, memberID: 50003, date: '2025-07-01', attentTime: '08:42', leaveTime: '18:27' },
+    { attendID: 100599, memberID: 50004, date: '2025-07-01', attentTime: '08:56', leaveTime: '18:14' },
+    { attendID: 100600, memberID: 50005, date: '2025-07-01', attentTime: '08:33', leaveTime: '18:05' },
+    { attendID: 100601, memberID: 50006, date: '2025-07-01', attentTime: '08:49', leaveTime: '18:06' },
+    { attendID: 100602, memberID: 50007, date: '2025-07-01', attentTime: '08:41', leaveTime: '18:16' },
+    { attendID: 100603, memberID: 50008, date: '2025-07-01', attentTime: '08:48', leaveTime: '18:03' },
+    { attendID: 100604, memberID: 50009, date: '2025-07-01', attentTime: '08:42', leaveTime: '18:22' },
+    { attendID: 100605, memberID: 50010, date: '2025-07-01', attentTime: '08:45', leaveTime: '18:08' },
+    { attendID: 100606, memberID: 50011, date: '2025-07-01', attentTime: '08:30', leaveTime: '18:13' },
+    { attendID: 100607, memberID: 50012, date: '2025-07-01', attentTime: '08:58', leaveTime: '18:19' },
+    { attendID: 100608, memberID: 50013, date: '2025-07-01', attentTime: '08:35', leaveTime: '18:07' },
+    { attendID: 100609, memberID: 50014, date: '2025-07-01', attentTime: '08:38', leaveTime: '18:04' },
+    { attendID: 100610, memberID: 50015, date: '2025-07-01', attentTime: '08:44', leaveTime: '18:01' },
+    { attendID: 100611, memberID: 50001, date: '2025-07-02', attentTime: '08:36', leaveTime: '18:02' },
+    { attendID: 100612, memberID: 50002, date: '2025-07-02', attentTime: '08:57', leaveTime: '18:30' },
+    { attendID: 100613, memberID: 50003, date: '2025-07-02', attentTime: '08:46', leaveTime: '18:13' },
+    { attendID: 100614, memberID: 50004, date: '2025-07-02', attentTime: '08:31', leaveTime: '18:11' },
+    { attendID: 100615, memberID: 50005, date: '2025-07-02', attentTime: '08:47', leaveTime: '18:09' },
+    { attendID: 100616, memberID: 50006, date: '2025-07-02', attentTime: '08:35', leaveTime: '18:26' },
+    { attendID: 100617, memberID: 50007, date: '2025-07-02', attentTime: '08:53', leaveTime: '18:06' },
+    { attendID: 100618, memberID: 50008, date: '2025-07-02', attentTime: '08:47', leaveTime: '18:16' },
+    { attendID: 100619, memberID: 50009, date: '2025-07-02', attentTime: '08:50', leaveTime: '18:11' },
+    { attendID: 100620, memberID: 50010, date: '2025-07-02', attentTime: '08:45', leaveTime: '18:26' },
+    { attendID: 100621, memberID: 50011, date: '2025-07-02', attentTime: '08:33', leaveTime: '18:23' },
+    { attendID: 100622, memberID: 50012, date: '2025-07-02', attentTime: '08:48', leaveTime: '18:22' },
+    { attendID: 100623, memberID: 50013, date: '2025-07-02', attentTime: '08:43', leaveTime: '18:18' },
+    { attendID: 100624, memberID: 50014, date: '2025-07-02', attentTime: '08:44', leaveTime: '18:09' },
+    { attendID: 100625, memberID: 50015, date: '2025-07-02', attentTime: '08:44', leaveTime: '18:08' },
+    { attendID: 100626, memberID: 50001, date: '2025-07-03', attentTime: '', leaveTime: '18:09' },
+    { attendID: 100627, memberID: 50002, date: '2025-07-03', attentTime: '08:42', leaveTime: '18:10' },
+    { attendID: 100628, memberID: 50003, date: '2025-07-03', attentTime: '08:41', leaveTime: '18:22' },
+    { attendID: 100629, memberID: 50004, date: '2025-07-03', attentTime: '08:37', leaveTime: '18:09' },
+    { attendID: 100630, memberID: 50005, date: '2025-07-03', attentTime: '08:52', leaveTime: '18:18' },
+    { attendID: 100631, memberID: 50006, date: '2025-07-03', attentTime: '08:56', leaveTime: '18:20' },
+    { attendID: 100632, memberID: 50007, date: '2025-07-03', attentTime: '08:44', leaveTime: '18:02' },
+    { attendID: 100633, memberID: 50008, date: '2025-07-03', attentTime: '08:44', leaveTime: '18:01' },
+    { attendID: 100634, memberID: 50009, date: '2025-07-03', attentTime: '08:55', leaveTime: '18:28' },
+    { attendID: 100635, memberID: 50010, date: '2025-07-03', attentTime: '08:58', leaveTime: '18:18' },
+    { attendID: 100636, memberID: 50011, date: '2025-07-03', attentTime: '08:46', leaveTime: '18:24' },
+    { attendID: 100637, memberID: 50012, date: '2025-07-03', attentTime: '08:37', leaveTime: '18:15' },
+    { attendID: 100638, memberID: 50013, date: '2025-07-03', attentTime: '08:54', leaveTime: '18:03' },
+    { attendID: 100639, memberID: 50014, date: '2025-07-03', attentTime: '08:42', leaveTime: '18:16' },
+    { attendID: 100640, memberID: 50015, date: '2025-07-03', attentTime: '08:42', leaveTime: '18:20' }
 ]
 
 // 5.1. get 근태 리스트 
@@ -799,3 +838,8 @@ function setAttendaceList(attendaceList) {
     localStorage.setItem('attendaceList', JSON.stringify(attendaceList));
 };
 
+// setPositionList(positionList) 
+// setDepartmentList(departmentList)
+// setHolidayList(holidayList)
+// setMemberList(memberList)
+//  setAttendaceList(attendaceList)

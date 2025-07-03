@@ -1,8 +1,5 @@
-let employee = JSON.parse(localStorage.getItem('login_memberID'))
-
 
 function getmemberList() {
-
 
     let memberList = localStorage.getItem('memberList');
     if (memberList == null) {
@@ -19,36 +16,66 @@ function setmemberList(memberList) {
 
 usercode();
 function usercode() {
-function usercode() {
     //가져오기
-    // const url = new URLSearchParams(location.search);
-    // const employee = url.get('memberID');
+    const url = new URLSearchParams(location.search);
+    const employee = url.get('memberID');
     let memberList = getmemberList();
-    for (let i = 0; i < memberList.length; i++) {
-    for (let i = 0; i < memberList.length; i++) {
+    for (let i = 0; i <= memberList.length - 1; i++) {
         const member = memberList[i];
-        if (member.memberID == employee) {
         if (member.memberID == employee) {
             document.querySelector('.employee').value = member.memberID;
             document.querySelector('.staffname').value = member.Name;
             document.querySelector('.birthdate').value = member.Birthday;
             document.querySelector('.position').value = changePositionName(member.posiID);
             document.querySelector('.post').value = changeDepartName(member.departID);
-            document.querySelector('.position').value = changePositionName(member.posiID);
-            document.querySelector('.post').value = changeDepartName(member.departID);
             document.querySelector('.email').value = member.Email;
-            document.querySelector('.phonenum').value = member.Call;
             document.querySelector('.phonenum').value = member.Call;
             break;
         }
     }
+    /*
+    
+    const birthdateInput = document.querySelector('.birthdate');
+    const positionInput = document.querySelector('.position');
+    const postInput = document.querySelector('.post');
+    const emailInput = document.querySelector('.email');
+    const phonenumInput = document.querySelector('.phonenum');
+
+    const obj = {
+        staffname: staffname,
+        employee: Number(employee),
+        birthdate: birthdate,
+        position: position,
+        post: Number(post),
+        email: email,
+        phonenum: Number(phonenum),
+    };
+
+    let memberList = getmemberList();
+
+    // 초기
+    const staffname = staffnameInput.value;
+    const employee = employeeInput.value;
+    const birthdate = birthdateInput.value;
+    const position = positionInput.value;
+    const post = postInput.value;
+    const email = emailInput.value;
+    const phonenum = phonenumInput.value;
+
+    alert('일단 출근');
+    memberList.push(obj);
+    setmemberList(memberList);
+    */
+    attendMem();
 }
 
-attendMem();
+
+
+
 function attendMem() {
-    // const url = new URLSearchParams(location.search);
-    // const employee = url.get('memberID');
-    // console.log(employee)
+    const url = new URLSearchParams(location.search);
+    const employee = url.get('memberID');
+    console.log(employee)
 
     const attendanceTable = document.querySelector('.attendanceTable');
     const attendaceList = getAttendaceList();
@@ -70,54 +97,7 @@ function attendMem() {
     attendanceTable.innerHTML = html;
 }
 
-function gotowork() {
-    console.log('출근');
-    // const url = new URLSearchParams(location.search);
-    // const employee = Number(url.get('memberID'));
-    console.log(employee)
 
-    let year = new Date().getFullYear(); // 연도 구함
-    let month = new Date().getMonth() + 1; // 달
-    month = month < 10 ? `0${month}` : month; //한자리수면 0붙여서 10< 이런식
-    let day = new Date().getDate(); // 일 반환
-    day = day < 10 ? `0${day}` : day;    //한자리수면 0붙여서 10< 이런식
-    let equals = `${year}-${month}-${day}`; // 달 12년-12-월-12일
-    console.log(employee);
-
-    // 시간 변수 정의
-    let hour = new Date().getHours();        // '시' 반환
-    hour = hour < 10 ? `0${hour}` : hour;
-    let munute = new Date().getMinutes();    // '분' 반환
-    munute = munute < 10 ? `0${munute}` : munute;
-    let time = `${hour}:${munute}`;
-    //console.log(time);
-    // for문 돌려
-    // memberID 일치하니? attendList.attenetTime == equal  and
-    // 객체를 뽑아와서 
-    // 정의된 시간변수를 객체에 집어 넣는다
-
-    let attendace = getAttendaceList();
-    for (let i = 0; i < attendaceList.length; i++) {
-        attendace = attendaceList[i];
-        // console.log(attendace.attentTime);
-
-        if (employee == attendace.memberID && attendace.date == equals) {
-            if (attendace.attentTime == "") {
-                console.log(attendace)
-                attendace.attentTime = time
-                console.log(attendace);
-                setAttendaceList(attendaceList);
-                attendMem();
-                alert('출근완료');
-                return;
-            } else {
-                alert(`\n 이미 등록된 출근 정보가 있습니다. \n (※ 출근 정보 수정이 있을 경우 관리자에게 문의해주시기 바랍니다.)`)
-            }
-        }
-
-
-    }
-}
 
 
 // 1.3. 직급id <-> 직급 이름 변환 함수
@@ -156,7 +136,7 @@ function changeDepartName(input) {
 function lateness(attentTime) {
     let lateness = ''
     if (attentTime > "09:10") {
-        lateness = `<span style="color : red">지각</span>`
+        lateness = '지각'
     } else {
         lateness = ''
     }
@@ -167,7 +147,7 @@ function lateness(attentTime) {
 function absence(attentTime) {
     let absence = ''
     if (attentTime == '') {
-        absence = `<span style="color : red">결근</span>`;
+        absence = "결근";
     }
     return absence
 }
