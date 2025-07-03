@@ -1,8 +1,10 @@
-// 현재 연도와 월 설정
-let currentYear = 2025;
-let currentMonth = 6;
 
-// 공휴일 및 일정 데이터
+// 현재 연도와 월 초기 설정
+let currentYear = 2025;
+let currentMonth = 6; // 6월부터 시작
+
+
+// 공휴일 및 일정 데이터 정의
 let contentArray = [
   { cno: 1, content: '어린이날,부처님오신날', date: '2025-5-5', color: 'red' },
   { cno: 2, content: '대체휴일', date: '2024-5-6', color: 'red' },
@@ -10,26 +12,26 @@ let contentArray = [
   { cno: 4, content: '현충일', date: '2025-6-6', color: 'red' }
 ];
 
-// 달력 출력 함수
+
+// 달력 렌더링 함수
 function calPrint() {
-  // 상단에 년/월 텍스트 설정
+  // 상단 월/년 텍스트 갱신
   const h6 = document.getElementById('monthText');
   h6.textContent = `${currentYear}년 ${currentMonth.toString().padStart(2, '0')}월`;
-
   const calBottom = document.getElementById('calBottom');
-
-  // 요일 표시 (일~토)
+  
+  // 요일 헤더 표시 (일~토)
   let html = `
     <div class="week sunday">일</div><div class="week">월</div><div class="week">화</div>
     <div class="week">수</div><div class="week">목</div><div class="week">금</div><div class="week thuday">토</div>`;
 
-  // 해당 월의 1일 요일 (0=일요일~6=토요일)
+  // 해당 월의 첫째 날 요일 (0=일요일, ..., 6=토요일)
   const firstDay = new Date(currentYear, currentMonth - 1, 1).getDay();
 
-  // 해당 월의 마지막 날짜
+  // 해당 월의 마지막 날짜 계산
   const lastDate = new Date(currentYear, currentMonth, 0).getDate();
 
-  // 시작 요일 전까지 빈 칸 채우기
+  // 빈 셀 채우기 (달력의 첫 주 시작 요일 맞추기)
   for (let i = 0; i < firstDay; i++) html += `<div></div>`;
 
   // 출근/지각 데이터 가져오기
@@ -40,12 +42,12 @@ function calPrint() {
   // 날짜별 셀 생성
   for (let day = 1; day <= lastDate; day++) {
     const dateStr = `${currentYear}-${currentMonth}-${day}`;
-    const weekDay = new Date(currentYear, currentMonth - 1, day).getDay(); // 0:일, 6:토
+    const weekDay = new Date(currentYear, currentMonth - 1, day).getDay(); // 요일 (0~6)
 
     let dayContent = '';
     let isHoliday = false;
 
-    // contentArray에 해당 날짜가 있으면 공휴일로 간주
+    // contentArray에서 해당 날짜가 공휴일인지 확인
     for (let plan of contentArray) {
       if (plan.date === dateStr) {
         isHoliday = true;
@@ -54,7 +56,7 @@ function calPrint() {
       }
     }
 
-    // 평일이면서 공휴일이 아닐 경우 출근/지각 정보 표시
+    // 평일 + 공휴일이 아닐 경우만 출근/지각 정보 표시
     if (weekDay !== 0 && weekDay !== 6 && !isHoliday) {
       const 출근값 = 출근[day - 1] ?? 0;
       const 지각값 = 지각[day - 1] ?? 0;
@@ -63,98 +65,79 @@ function calPrint() {
       dayContent += `<div style="color:black">지각: ${지각값}명</div>`;
     }
 
-    // 최종 HTML에 날짜 셀 추가
+    // 최종적으로 셀을 달력에 추가
     html += `<div class='dayEdit'>${day}<br>${dayContent}</div>`;
   }
 
-  // 달력 본문 출력
+  // HTML 삽입하여 달력 표시
   calBottom.innerHTML = html;
 }
 
 
-mounth5Attend();
-function mounth5Attend() { //5월 출근/지각 찾기
-  let month5AttendArray = [];
-  let month5lateArray = [];
-  let month5 = getAttendaceList();
-  // 5월 정상출근
-  for (let i = 0; i <= month5.length - 1; i++) {
-    let attend = month5[i]
-
-    if (attend.date >= "2025-05-01" && attend.date < "2025-06-01") {
-      if (attend.attentTime <= "09:00") {
-        month5AttendArray.push(attend);
-
-      }
-    }
-  }
-  for (let j = 0; j <= month5.length - 1; j++) {
-    let late = month5[j]
-    if (late.date >= "2025-05-01" && late.date < "2025-06-01") {
-      if (late.attentTime >= "09:00") {
-        month5lateArray.push(late);
-      }
-    }
-
-  }
-  return {month5AttendArray,month5lateArray};
-  // console.log(month5lateArray);
-}
-
-// 월별 출근/지각 데이터 생성 함수
+// 출근/지각 데이터 생성 함수
 function getMonthlyData(year, month) {
-  const {month5AttendArray,month5lateArray}=mounth5Attend()
+  // 해당 월의 날짜 수 계산
   const daysInMonth = new Date(year, month, 0).getDate();
-  const 출근 = [];
-  const 지각 = [];
 
+  // 출근/지각 배열 초기화
+  const 출근 = Array(daysInMonth).fill(0);
+  const 지각 = Array(daysInMonth).fill(0);
 
-  const 지각패턴_5월 = { 1: 2, 2: 4, 3: 6, 4: 1, 5: 0 };
-  const 출근패턴_6월 = { 1: 20, 2: 18, 3: 22, 4: 25, 5: 27 };
-  const 지각패턴_6월 = { 1: 0, 2: 1, 3: 2, 4: 1, 5: 0 };
+  // 출근기록 데이터 가져오기
+  const attendList = getAttendaceList();
 
-  for (let day = 1; day <= daysInMonth; day++) {
-    const date = new Date(year, month - 1, day);
-    const weekDay = date.getDay(); // 0:일, 6:토
+  // 기록 하나하나 순회
+  for (let record of attendList) {
+    const recordDate = new Date(record.date);
+    const recordYear = recordDate.getFullYear();
+    const recordMonth = recordDate.getMonth() + 1;
+    const recordDay = recordDate.getDate();
 
-    if (weekDay === 0 || weekDay === 6) {
-      출근.push(0);
-      지각.push(0);
-    } else if (month === 5) {
-      출근.push(month5AttendArray[weekDay] ?? 0);
-      지각.push(지각패턴_5월[weekDay] ?? 0);
-    } else if (month === 6) {
-      출근.push(출근패턴_6월[weekDay] ?? 0);
-      지각.push(지각패턴_6월[weekDay] ?? 0);
-    } else {
-      출근.push(Math.floor(Math.random() * 30));
-      지각.push(Math.floor(Math.random() * 10));
+    // 현재 월/연도와 일치하는 데이터만 처리
+    if (recordYear === year && recordMonth === month) {
+      const weekDay = recordDate.getDay();
+      if (weekDay === 0 || weekDay === 6) continue; // 주말은 건너뜀
+
+      // 9시 이전이면 출근, 이후면 지각
+      if (record.attentTime <= "09:00") {
+        출근[recordDay - 1]++;
+      } else {
+        지각[recordDay - 1]++;
+      }
     }
   }
 
+  // 계산된 출근/지각 데이터 반환
   return { 출근, 지각 };
 }
 
-// 차트 초기화
+
+// Chart.js 초기 차트 설정
 const ctx = document.getElementById('myChart');
 let myChart = new Chart(ctx, {
-  type: 'line',
+  type: 'line', // 선형 차트
   data: {
-    labels: [],     // x축 레이블 (날짜)
-    datasets: []    // 데이터셋 (출근, 지각)
+    labels: [],     // 날짜 (1, 2, 3, ..., 30 등)
+    datasets: []    // 출근/지각 데이터셋
   },
   options: {
     responsive: true,
-    scales: { y: { beginAtZero: true } } // y축 0부터 시작
+    scales: {
+      y: {
+        beginAtZero: true // y축은 0부터 시작
+      }
+    }
   }
 });
 
-// 월 변경 함수 (이전/다음 버튼 클릭 시 실행)
+
+// 월 변경 함수 (이전/다음 클릭 시 실행)
 function monthChange(direction) {
-  // 방향에 따라 월 변경 (1:다음월, -1:이전월)
+  
+  // direction이 1이면 다음 달, -1이면 이전 달
   currentMonth += direction;
 
-  // 월 범위를 벗어나면 연도도 조정
+  // 월 단위 넘침 처리
   if (currentMonth < 1) {
     currentMonth = 12;
     currentYear--;
@@ -163,13 +146,14 @@ function monthChange(direction) {
     currentYear++;
   }
 
-  // 달력 다시 그리기
+  // 달력 다시 출력
   calPrint();
 
-  // 새로운 월의 출근/지각 데이터로 차트 갱신
+  // 차트 데이터 갱신
   const days = new Date(currentYear, currentMonth, 0).getDate();
   const newData = getMonthlyData(currentYear, currentMonth);
 
+  // 차트 x축: 날짜, y축: 출근/지각
   myChart.data.labels = Array.from({ length: days }, (_, i) => (i + 1).toString());
   myChart.data.datasets = [
     { label: '출근', data: newData.출근, borderColor: 'blue', fill: false },
@@ -178,8 +162,17 @@ function monthChange(direction) {
   myChart.update();
 }
 
-// 초기 로딩 시 캘린더와 차트 표시
+
+// 초기 로딩 시 실행
+
 window.onload = () => {
-  calPrint();       // 달력 출력
-  monthChange(0);   // 차트 초기화 (현재월 기준)
+  calPrint();       // 달력 표시
+  monthChange(0);   // 차트 초기화
 };
+
+
+// 출근 기록 배열 반환 함수 (전역 데이터 사용)
+
+function getAttendaceList() {
+  return attendaceList; // 아래 전역 데이터 참조
+}
