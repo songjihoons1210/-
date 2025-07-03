@@ -92,9 +92,16 @@
             margin: 50px;
         }
 
-        .btn-lg{
+        .btn-lg {
             width: 13rem;
             height: 3rem;
+        }
+
+        p{
+            font-size: 14px;
+            margin-bottom: 0px;
+            color : #aeaeae
+
         }
     </style>
 </head>
@@ -103,7 +110,8 @@
     <div id="wrap"> <!--wrap-->
         <div id="main" class="container"> <!--main-->
             <div class="row">
-                <img id="attndancelogo" class="col-8" src="https://pbs.twimg.com/media/Gu5KDf8WgAAGjG5?format=png&name=900x900">
+                <img id="attndancelogo" class="col-8"
+                    src="https://pbs.twimg.com/media/Gu5KDf8WgAAGjG5?format=png&name=900x900">
                 <h4>로그인</h4>
                 <div>
                     사번 <input class="login" type="number" />
@@ -116,6 +124,15 @@
                 </div>
             </div>
         </div><!--main end-->
+
+        <div id="notice">
+            <p>※ 참고사항</p>
+            <p>원활한 시연을 위하여 아래의 function을 console에 실행해 주세요.</p>
+            <p>setPositionList(positionList)</p>
+            <p>setDepartmentList(departmentList)</p>
+            <p>setMemberList(memberList)</p>
+            <p>setAttendaceList(attendaceList)</p>
+        </div>
     </div> <!--wrap end-->
 
     <script src="../00_참고/localStorage_table.js"></script>
