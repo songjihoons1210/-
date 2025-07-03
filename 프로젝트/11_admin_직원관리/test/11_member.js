@@ -99,7 +99,7 @@ function saveNewMember() {
         Email: newEmail,
         posiID: Number(newposiID),
         departID: Number(newdepartID),
-        pwd: 1234
+        pwd: "1234"
     }
     // console.log(newMember)
 
