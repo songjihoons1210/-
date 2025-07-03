@@ -170,8 +170,8 @@ function monthChange(direction) {
   // 차트 x축: 날짜, y축: 출근/지각
   myChart.data.labels = Array.from({ length: days }, (_, i) => (i + 1).toString());
   myChart.data.datasets = [
-    { label: '출근', data: newData.출근, borderColor: 'blue', fill: false },
-    { label: '지각', data: newData.지각, borderColor: 'red', fill: false }
+    { label: '출근', data: newData.출근, borderColor: '#4f81bd', fill: false },
+    { label: '지각', data: newData.지각, borderColor: '#ff7e79', fill: false }
   ];
   myChart.update();
 }

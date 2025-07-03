@@ -36,8 +36,8 @@
             padding: 35px 30px;
             border-radius: 20px;
             box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
-    
-            
+
+
         }
 
         .menubutton {
@@ -57,7 +57,6 @@
             margin-top: 30px;
         }
 
-        /*==========================달력 ========================== */
         /* 달력 상단 구역 */
         #calTop {
             display: flex;
@@ -67,19 +66,24 @@
 
         }
 
-        #calTop>h6 {
+        #calTop>h4 {
             margin: 0px 20px;
-
-            font-size: 40px;
             font-weight: bold;
         }
 
         #calTop>button {
             background-color: white;
-
             border: none;
-            font-size: 70px;
-            color: rgb(22, 62, 99);
+        
+        }
+        .bibi-caret-left-square{
+            width: 30px;
+            height: 28.8px;
+        }
+
+        .bibi-caret-right-square{
+            width: 30px;
+            height: 28.8px;
         }
 
         /* 달력 날짜 표시 구역 */
@@ -137,17 +141,17 @@
             padding-left: 10px;
         }
 
-        .attendance{
+        .attendance {
             margin: 0 auto;
         }
 
-        .chart h3 {
+        .chart h4 {
             text-align: center;
             font-weight: bold;
 
         }
-   
-        #myChart{
+
+        #myChart {
             width: 100%;
         }
     </style>
@@ -160,9 +164,11 @@
             <div class="row">
                 <img id="attndancelogo" class="col-3" src="../00_참고/_img/attendance_logo.webp">
                 <div id="menuBar" class=" col-9 container row">
-                    <a href="../11_admin_직원관리/11_member.html" role="button" class="btn btn-outline-dark col menubutton">사원관리</a>
-                    <!-- 풀 후 변경 <a href="../11_admin_직원관리/test/11_member.html" role="button" class="btn btn-outline-dark col menubutton">사원관리</a> --> 
-                    <a href="../12_admin_근태이력/12_attendAdmin.html?page=1" role="button" class="btn btn-outline-dark col menubutton">근태이력</a>
+                    <a href="../11_admin_직원관리/11_member.html" role="button"
+                        class="btn btn-outline-dark col menubutton">사원관리</a>
+                    <!-- 풀 후 변경 <a href="../11_admin_직원관리/test/11_member.html" role="button" class="btn btn-outline-dark col menubutton">사원관리</a> -->
+                    <a href="../12_admin_근태이력/12_attendAdmin.html?page=1" role="button"
+                        class="btn btn-outline-dark col menubutton">근태이력</a>
                     <a href="Calendar.html" role="button" class="btn btn-outline-dark col menubutton">캘린더</a>
                 </div>
             </div>
@@ -171,46 +177,66 @@
         <div id="main" class="container"> <!--main-->
             <!--============================ Calendar================================-->
             <div class="content"><!--Calendar-->
-                    <div id="calTop">
-                        <button onclick="monthChange( -1 )"> ⬅ </button>
-                        <h6 id="monthText">2025년 06월</h6>
-                        <button onclick="monthChange( 1 )"> ⮕ </button>
-                    </div>
-                    <div id="calBottom">
-            </div><!--Calendar end-->
+                <div id="calTop">
+                    <button onclick="monthChange( -1 )">
+                        <!-- 왼쪽 버튼 이미지-->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bibi-caret-left-square" viewBox="0 0 16 16">
+                            <path
+                                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                            <path
+                                d="M10.205 12.456A.5.5 0 0 0 10.5 12V4a.5.5 0 0 0-.832-.374l-4.5 4a.5.5 0 0 0 0 .748l4.5 4a.5.5 0 0 0 .537.082" />
+                        </svg> </button>
 
-            <!--============================ chart================================-->
-            <div class="chart"> <!--Chart-->
-                <div>
-                    <div>
-                        <h3> 출근/지각 통계</h3>
-                        <div> <!-- 차트 자체에 컨테이너-->
-                            <canvas id="myChart"></canvas>
-                        </div>
+                    <h4 id="monthText">2025년 06월</h4>
 
+                    <button onclick="monthChange( 1 )">
+                        <!--오른쪽 버튼 이미지-->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bibi-caret-right-square" viewBox="0 0 16 16">
+                            <path
+                                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                            <path
+                                d="M5.795 12.456A.5.5 0 0 1 5.5 12V4a.5.5 0 0 1 .832-.374l4.5 4a.5.5 0 0 1 0 .748l-4.5 4a.5.5 0 0 1-.537.082" />
+                        </svg>
 
-                        <!-- CDN 에서 chart.js를 포함 -->
-                        <!-- 차트객체(인스턴스)만들기-->
-                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                        <script src="Calendar.js"></script>
-                        <script>
-                            // 초기 출력
-                            calPrint();
-                            monthChange(0); // 0으로 초기화 호출해서 차트도 초기화
-                        </script>
-                        
-                    </div>
+                    </button>
                 </div>
-            </div><!--chart end-->
-        </div><!--main end-->
-    </div> <!--wrap end-->
+                <div id="calBottom">
+                </div><!--Calendar end-->
 
-    
-    <!-- 부트스트랩 스크립트 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
-        crossorigin="anonymous"></script>
-    
+                <!--============================ chart================================-->
+                <div class="chart"> <!--Chart-->
+                    <div>
+                        <div>
+                            <h4> 출근/지각 통계</h4>
+                            <div> <!-- 차트 자체에 컨테이너-->
+                                <canvas id="myChart"></canvas>
+                            </div>
+
+
+                            <!-- CDN 에서 chart.js를 포함 -->
+                            <!-- 차트객체(인스턴스)만들기-->
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                            <script src="Calendar.js"></script>
+                            <script>
+                                // 초기 출력
+                                calPrint();
+                                monthChange(0); // 0으로 초기화 호출해서 차트도 초기화
+                            </script>
+
+                        </div>
+                    </div>
+                </div><!--chart end-->
+            </div><!--main end-->
+        </div> <!--wrap end-->
+
+
+        <!-- 부트스트랩 스크립트 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+            crossorigin="anonymous"></script>
+
 </body>
 
 </html>
