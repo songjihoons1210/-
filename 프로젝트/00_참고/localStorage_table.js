@@ -28,7 +28,7 @@ function getPositionList() {
 };
 
 // 1.2. set 직급 리스트
-function setProductsList(positionList) {
+function setPositionList(positionList) {
     localStorage.setItem('positionList', JSON.stringify(positionList));
 };
 
@@ -794,7 +794,7 @@ function setAttendaceList(attendaceList) {
     localStorage.setItem('attendaceList', JSON.stringify(attendaceList));
 };
 
-// setProductsList(positionList)
+// setPositionList(positionList)
 // setDepartmentList(departmentList)
 // setHolidayList(holidayList)
 // setMemberList(memberList)
