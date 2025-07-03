@@ -1,4 +1,3 @@
-
 // 공통 table 및 공통 function 정의
 
 // 1. 직급 리스트 =======================================
@@ -839,7 +838,7 @@ function setAttendaceList(attendaceList) {
     localStorage.setItem('attendaceList', JSON.stringify(attendaceList));
 };
 
-// setPositionList(positionList)
+// setPositionList(positionList) 
 // setDepartmentList(departmentList)
 // setHolidayList(holidayList)
 // setMemberList(memberList)

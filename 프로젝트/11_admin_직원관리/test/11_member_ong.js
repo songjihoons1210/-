@@ -125,49 +125,33 @@ function deletMember(memberID) {
 // 사원 수정 - 1 정보 입력 =================================
 function updateViewMember(memberID) {
     let html_updateMember = ``
-    let content = document.querySelector(".Membermodal")
-    // console.log(memberID)
-    // console.log(content.innerHTML)
+    let content = document.querySelector(".modal-body2")
+    console.log(memberID)
+    console.log(content.innerHTML)
+
+    // 모달 내 부서 선택
+    let departSelect = document.querySelector('.departSelect')
+    const DepartmentList = getDepartmentList()
+    let html_depart = ``
+    for (let i = 1; i < DepartmentList.length; i++) {
+        Department = DepartmentList[i]
+        html_depart += `<option value=${Department.departID}>${Department.departName}</option>`
+    }
+
+    // 모달 내의 직급 선택
+    let posiSelect = document.querySelector('.posiSelect')
+    const PositionList = getPositionList()
+    let html_posi = ``
+    for (let i = 1; i < PositionList.length; i++) {
+        position = PositionList[i]
+        html_posi += `<option value=${position.posiID}>${position.posiName}</option>`
+    }
 
     const memberList = getMemberList()
     for (let i = 0; memberList.length; i++) {
         const member = memberList[i]
         if (member.memberID == memberID) {
-
-            // 모달 내의 직급을 표시하기 위해
-            let posiSelect = document.querySelector('.posiSelect')
-            const PositionList = getPositionList()
-            let html_posi = ``
-            for (let i = 1; i < PositionList.length; i++) {
-                position = PositionList[i]
-                if (member.posiID == position.posiID) {
-                    html_posi += `<option value=${position.posiID} selected>${position.posiName}</option>`
-                } else {
-                    html_posi += `<option value=${position.posiID} >${position.posiName}</option>`
-                };
-            };
-
-            // 모달 내의 부서를 표시하기 위해
-            let departSelect = document.querySelector('.departSelect')
-            const DepartmentList = getDepartmentList()
-            let html_depart = ``
-            for (let i = 1; i < DepartmentList.length; i++) {
-                Department = DepartmentList[i]
-                if (member.departID == Department.departID) {
-                    html_depart += `<option value=${Department.departID} selected>${Department.departName}</option>`
-                } else {
-                    html_depart += `<option value=${Department.departID}>${Department.departName}</option>`
-                }
-            }
-            //<option selected> 그 옵션이 선택되어서 표시
-
-            html_updateMember += `
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">사원 정보 수정</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body2">
-                    <div>
+            html_updateMember += `<div>
                         <label for="recipient-name" class="col-form-label">사번</label> 
                         <input class="form-control" id="recipient-name"  type="number" value="${member.memberID}" disabled /> 
                     </div>
@@ -177,7 +161,7 @@ function updateViewMember(memberID) {
                     </div>
                     <div>
                         <label for="recipient-name" class="col-form-label">생년월일</label> 
-                        <input class="form-control" id="recipient-name" type="date"  value="${member.Birthday}"/>
+                        <input class="form-control" id="recipient-name" type="date" value="${member.Birthday}"/>
                     </div>
                     <div>
                         <label for="recipient-name" class="col-form-label">연락처</label> 
@@ -189,60 +173,43 @@ function updateViewMember(memberID) {
                     </div>
                     <div>
                         <label for="recipient-name" class="col-form-label">부서</label> 
-                        <select class="departSelect" class="form-control" id="recipient-name">${html_depart}</select>
+                        <select class="departSelect" class="form-control" id="recipient-name" value="${member.posiID}">${html_depart}</select>
                     </div>
                     <div>
                         <label for="recipient-name" class="col-form-label">직급</label> 
-                        <select class="posiSelect" class="form-control" id="recipient-name">${html_posi}</select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                    <button type="button" class="btn btn-primary" onclick="updateMember(${member.memberID})" data-bs-dismiss="modal">저장</button>
-                </div>`
-
-            // value="${member.departID}"
-            //value="${member.posiID}"
+                        <select class="posiSelect" class="form-control" id="recipient-name" value="${member.departID}" >${html_posi}</select>
+                    </div>`
             content.innerHTML = html_updateMember
             return;
         }
     }
 }
 
-// 사원 수정 - 2 정보 저장 =================================
+// 사원 수정 - 2 정보 저장 =================================@@@@@@@@@@@@@@@@@@@@
 function updateMember(memberID) {
-    // console.log('updateMember exe')
-    // console.log(memberID)
+    const MemberList = getMemberList()
+    
+    const newName = document.querySelector('.modal-body2 > div:nth-child(2) input').value
+    const newBirthday = document.querySelector('.modal-body2 > div:nth-child(3) input').value
+    const newCall = document.querySelector('.modal-body2 > div:nth-child(4) input').value
+    const newEmail = document.querySelector('.modal-body2 > div:nth-child(5) input').value
+    const newdepartID = document.querySelector('.modal-body2 > div:nth-child(6) select').value
+    const newposiID = document.querySelector('.modal-body2 > div:nth-child(7) select').value
 
-    const memberList = getMemberList()
-
-    const reName = document.querySelector('.modal-body2 > div:nth-child(2) input').value
-    const reBirthday = document.querySelector('.modal-body2 > div:nth-child(3) input').value
-    const reCall = document.querySelector('.modal-body2 > div:nth-child(4) input').value
-    const reEmail = document.querySelector('.modal-body2 > div:nth-child(5) input').value
-    const redepartID = document.querySelector('.modal-body2 > div:nth-child(6) select').value
-    const reposiID = document.querySelector('.modal-body2 > div:nth-child(7) select').value
-
-    // console.log(reName,reBirthday,reCall,reEmail,redepartID,reposiID)
-
-    for (let i = 0 ; i < memberList.length ; i++ ){
-        let member = memberList[i]
-
-        if (member.memberID == memberID){
-
-            member.Name = reName
-            member.Birthday = reBirthday
-            member.Call = reCall
-            member.Email = reEmail
-            member.departID = Number(redepartID)
-            member.posiID = Number(reposiID)
-
-            alert("사원 정보가 수정되었습니다.")
-            
-            setMemberList(memberList)
-            MemberListView()
-            return;
-        }
+    const newMember = {
+        memberID: Number(memberID),
+        Name: newName,
+        Birthday: newBirthday,
+        Call: newCall,
+        Email: newEmail,
+        posiID: Number(newposiID),
+        departID: Number(newdepartID),
+        pwd: 1234
     }
+    // console.log(newMember)
+
+    MemberList.push(newMember)
+    setMemberList(MemberList)
+    MemberListView()
 }
 
