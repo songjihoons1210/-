@@ -7,9 +7,16 @@ let currentMonth = 6; // 6월부터 시작
 // 공휴일 및 일정 데이터 정의
 let contentArray = [
   { cno: 1, content: '어린이날,부처님오신날', date: '2025-5-5', color: 'red' },
-  { cno: 2, content: '대체휴일', date: '2024-5-6', color: 'red' },
+  { cno: 2, content: '대체휴일', date: '2025-5-6', color: 'red' },
   { cno: 3, content: '제21대 대통령선거', date: '2025-6-3', color: 'red' },
-  { cno: 4, content: '현충일', date: '2025-6-6', color: 'red' }
+  { cno: 4, content: '현충일', date: '2025-6-6', color: 'red' },
+  { cno: 5, content: '광복절', date: '2025-8-15', color: 'red' },
+  { cno: 6, content: '추석연휴', date: '2025-10-3', color: 'red' },
+  { cno: 7, content: '추석연휴', date: '2025-10-6', color: 'red' },
+  { cno: 8, content: '추석연휴', date: '2025-10-7', color: 'red' },
+  { cno: 9, content: '대체 공휴일', date: '2025-10-8', color: 'red' },
+  { cno: 10, content: '한글날', date: '2025-10-9', color: 'red' },
+  { cno: 11, content: '성탄절', date: '2025-12-25', color: 'red' }
 ];
 
 
@@ -26,7 +33,7 @@ function calPrint() {
     <div class="week">수</div><div class="week">목</div><div class="week">금</div><div class="week thuday">토</div>`;
 
   // 해당 월의 첫째 날 요일 (0=일요일, ..., 6=토요일)
-  const firstDay = new Date(currentYear, currentMonth - 1, 1).getDay();
+  const firstDay = new Date(currentYear, currentMonth -1, 1).getDay();
 
   // 해당 월의 마지막 날짜 계산
   const lastDate = new Date(currentYear, currentMonth, 0).getDate();
@@ -61,8 +68,8 @@ function calPrint() {
       const 출근값 = 출근[day - 1] ?? 0;
       const 지각값 = 지각[day - 1] ?? 0;
 
-      dayContent += `<div style="color:black">출근: ${출근값}명</div>`;
-      dayContent += `<div style="color:black">지각: ${지각값}명</div>`;
+      dayContent += `<div class="attendance" style="color:black">출근: ${출근값}명</div>`;
+      dayContent += `<div class="attendance"style="color:black">지각: ${지각값}명</div>`;
     }
 
     // 최종적으로 셀을 달력에 추가
@@ -84,7 +91,14 @@ function getMonthlyData(year, month) {
   const 지각 = Array(daysInMonth).fill(0);
 
   // 출근기록 데이터 가져오기
-  const attendList = getAttendaceList();
+   const storedData = localStorage.getItem('attendaceList');
+
+  // 로컬스토리지에 데이터 없으면 0으로 채운 값 반환
+  if (!storedData) {
+    return { 출근, 지각 };
+  }
+
+  const attendList =JSON.parse(storedData);
 
   // 기록 하나하나 순회
   for (let record of attendList) {
@@ -99,7 +113,7 @@ function getMonthlyData(year, month) {
       if (weekDay === 0 || weekDay === 6) continue; // 주말은 건너뜀
 
       // 9시 이전이면 출근, 이후면 지각
-      if (record.attentTime <= "09:00") {
+      if (record.attentTime <= "09:10") {
         출근[recordDay - 1]++;
       } else {
         지각[recordDay - 1]++;
@@ -133,7 +147,7 @@ let myChart = new Chart(ctx, {
 
 // 월 변경 함수 (이전/다음 클릭 시 실행)
 function monthChange(direction) {
-  
+
   // direction이 1이면 다음 달, -1이면 이전 달
   currentMonth += direction;
 

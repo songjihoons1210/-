@@ -19,7 +19,7 @@
             font-family: 'Noto Sans:ital';
             font-weight: 400;
             max-width: 1280px;
-          
+            margin: 10px auto;
 
             /* border: 1px red solid; */
         }
@@ -36,7 +36,7 @@
             padding: 35px 30px;
             border-radius: 20px;
             box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
-            margin: 10px 320px;
+    
             
         }
 
@@ -89,21 +89,18 @@
             flex-wrap: wrap;
             /*하위 요소들이 자동으로 줄바꿈*/
             /* padding-left: 100px; */
-            width: 1200px;
+            width: 100%;
 
         }
 
         #calBottom>div {
-            width: 13%;
+            width: 14.2%;
+            margin: 0px 0px;
             /* 가로사이즈 : 부모요소의 가로사이즈 100% 의 7등분 */
             height: 70px;
             /* 일일  상자 세로사이즈 */
             font-size: 10px;
             border-bottom: solid 3px black;
-            ;
-
-
-
         }
 
         #calBottom>.week {
@@ -140,10 +137,21 @@
             padding-left: 10px;
         }
 
+        .attendance{
+            margin: 0 auto;
+        }
+
         .chart h3 {
             text-align: center;
             font-weight: bold;
 
+        }
+        .chartSize{
+            width: 100% !important;
+            height: 300px;
+        }
+        .myChart{
+            width: 100%
         }
     </style>
 </head>
@@ -155,10 +163,9 @@
             <div class="row">
                 <img id="attndancelogo" class="col-3" src="https://pbs.twimg.com/media/Gu5KDf8WgAAGjG5?format=png&name=900x900">
                 <div id="menuBar" class=" col-9 container row">
-                    <a href="../11_admin_직원관리/11_member.html" role="button"
-                        class="btn btn-outline-dark col menubutton">사원관리</a>
-                    <a href="../12_admin_근태이력/12_attendAdmin.html?page=1" role="button"
-                        class="btn btn-outline-dark col menubutton">근태이력</a>
+                    <a href="../11_admin_직원관리/11_member.html" role="button" class="btn btn-outline-dark col menubutton">사원관리</a>
+                    <!-- 풀 후 변경 <a href="../11_admin_직원관리/test/11_member.html" role="button" class="btn btn-outline-dark col menubutton">사원관리</a> --> 
+                    <a href="../12_admin_근태이력/12_attendAdmin.html?page=1" role="button" class="btn btn-outline-dark col menubutton">근태이력</a>
                     <a href="Calendar.html" role="button" class="btn btn-outline-dark col menubutton">캘린더</a>
                 </div>
             </div>
@@ -180,7 +187,7 @@
                 <div>
                     <div>
                         <h3> 출근/지각 통계</h3>
-                        <div> <!-- 차트 자체에 컨테이너-->
+                        <div class="chartSize"> <!-- 차트 자체에 컨테이너-->
                             <canvas id="myChart"></canvas>
                         </div>
 
