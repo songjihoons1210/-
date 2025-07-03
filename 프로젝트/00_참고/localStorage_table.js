@@ -838,8 +838,8 @@ function setAttendaceList(attendaceList) {
     localStorage.setItem('attendaceList', JSON.stringify(attendaceList));
 };
 
-setPositionList(positionList)
-setDepartmentList(departmentList)
-setHolidayList(holidayList)
-setMemberList(memberList)
-setAttendaceList(attendaceList)
+// setPositionList(positionList) 
+// setDepartmentList(departmentList)
+// setHolidayList(holidayList)
+// setMemberList(memberList)
+// setAttendaceList(attendaceList)
