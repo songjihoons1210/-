@@ -260,6 +260,7 @@ function AttendaceUpdate(attendID) {
             attendaceList[i] = attendace
             setAttendaceList(attendaceList)
             AttendaceListView()
+            alert("근태 이력이 수정되었습니다.")
             return;
         };
     };
@@ -269,4 +270,105 @@ function AttendaceUpdate(attendID) {
 function valueReset(attendID) {
     document.querySelector('.modal-body > div:nth-child(6) > input').value = ''
     document.querySelector('.modal-body > div:nth-child(7) > input').value = ''
+}
+
+// function addrow() {
+//     console.log("addrow exe")
+
+//     // 날짜 정보 가져오기
+//     let today = new Date();
+
+//     let year = today.getFullYear();
+//     let month = today.getMonth() + 1;
+//     month = month < 9 ? `0${month}` : month;
+//     let day = today.getDate()
+//     day = day < 9 ? `0${day}` : day;
+
+//     let yyyymmdd = `${year}-${month}-${day}`
+
+//     const attendaceList = getAttendaceList()
+//     const memberList = getMemberList()
+
+//     for (let i = 1; i < memberList.length; i++) {
+//         const member = memberList[i]
+
+//         let newAttendID = attendaceList[attendaceList.length - 1].attendID + 1;
+
+//         let newAttent = {
+//             attendID: Number(newAttendID),
+//             memberID: Number(member.memberID),
+//             date: yyyymmdd,
+//             attentTime: "",
+//             leaveTime: ""
+//         }
+
+//         // console.log(newAttendID)
+//         for (let j = 0; j < attendaceList.length; j++) {
+//             let attendace = attendaceList[j]
+
+//             //유효성 검사 : 동일한 일자에 동일한 memberID의 이력이 있는 경우 break
+//             if (newAttent.memberID == attendace.memberID && newAttent.date == attendace.date) {
+//                 alert("동일한 일자의 근태 정보행이 이미 추가되어있습니다.")
+//                 break
+//             } else {
+//                 // console.log(newAttent.memberID)
+//                 // console.log(newAttent.date)
+//                 attendaceList.push(newAttent)
+//                 setAttendaceList(attendaceList)
+//             };
+//         };
+//     };
+//     console.log(attendaceList)
+//     AttendaceListView()
+// };
+
+function addrow() {
+    console.log("addrow exe");
+
+    // 오늘 날짜 생성 (yyyy-mm-dd 형식)
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    month = month < 9 ? `0${month}` : month;
+    let day = today.getDate()
+    day = day < 9 ? `0${day}` : day;
+    const yyyymmdd = `${year}-${month}-${day}`;
+
+    const attendaceList = getAttendaceList();
+    const memberList = getMemberList();
+
+    let newAttendID = attendaceList.length > 0 ? attendaceList[attendaceList.length - 1].attendID + 1 : 1;
+    let addedCount = 0;
+
+    for (let i = 1; i < memberList.length; i++) {
+        const member = memberList[i];
+
+        // 이 member에 대해 이미 오늘 날짜의 근태 이력이 있는가?
+        const exists = attendaceList.some(a => a.memberID === member.memberID && a.date === yyyymmdd);
+        //some >> 간결 중복 검사 / existe >> true/flase
+
+        if (exists) {
+            console.log(`memberID ${member.memberID}는 이미 ${yyyymmdd}에 출근 이력이 존재`);
+            continue; // 다음 사원으로
+        }
+
+        const newAttent = {
+            attendID: newAttendID++,
+            memberID: member.memberID,
+            date: yyyymmdd,
+            attentTime: "",
+            leaveTime: ""
+        };
+
+        attendaceList.push(newAttent);
+        addedCount++;
+    }
+
+    if (addedCount === 0) {
+        alert("오늘 날짜에 추가 가능한 출근 이력이 없습니다.");
+    } else {
+        setAttendaceList(attendaceList);
+        alert(`${addedCount}명의 출근 이력이 추가되었습니다.`);
+        AttendaceListView();
+    }
 }
