@@ -68,8 +68,8 @@ function calPrint() {
       const 출근값 = 출근[day - 1] ?? 0;
       const 지각값 = 지각[day - 1] ?? 0;
 
-      dayContent += `<div style="color:black">출근: ${출근값}명</div>`;
-      dayContent += `<div style="color:black">지각: ${지각값}명</div>`;
+      dayContent += `<div class="attendance" style="color:black">출근: ${출근값}명</div>`;
+      dayContent += `<div class="attendance"style="color:black">지각: ${지각값}명</div>`;
     }
 
     // 최종적으로 셀을 달력에 추가
