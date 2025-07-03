@@ -271,3 +271,55 @@ function valueReset(attendID) {
     document.querySelector('.modal-body > div:nth-child(6) > input').value = ''
     document.querySelector('.modal-body > div:nth-child(7) > input').value = ''
 }
+
+// function addrow() {
+//     console.log("addrow exe")
+
+//     // 날짜 정보 가져오기
+//     let today = new Date();
+
+//     let year = today.getFullYear();
+//     let month = today.getMonth() + 1;
+//     month = month < 9 ? `0${month}` : month;
+//     let day = today.getDate()
+//     day = day < 9 ? `0${day}` : day;
+
+//     let yyyymmdd = `${year}-${month}-${day}`
+
+//     const attendaceList = getAttendaceList()
+//     const memberList = getMemberList()
+
+//     for (let i = 1; i < memberList.length; i++) {
+//         const member = memberList[i]
+
+//         let newAttendID = attendaceList[attendaceList.length - 1].attendID + 1;
+
+//         let newAttent = {
+//             attendID: Number(newAttendID),
+//             memberID: Number(member.memberID),
+//             date: yyyymmdd,
+//             attentTime: "",
+//             leaveTime: ""
+//         }
+
+//         // console.log(newAttendID)
+//         for (let j = 0; j < attendaceList.length; j++) {
+//             let attendace = attendaceList[j]
+
+//             //유효성 검사 : 동일한 일자에 동일한 memberID의 이력이 있는 경우 break
+//             if (newAttent.memberID == attendace.memberID && yyyymmdd == attendace.date) {
+//                 alert("동일한 일자의 근태 정보행이 이미 추가되어있습니다.")
+//                 break;
+//             } else {
+
+//                 // console.log(newAttent.memberID)
+//                 // console.log(newAttent.date)
+//                 attendaceList.push(newAttent)
+//                 setAttendaceList(attendaceList)
+//             };
+//         };
+//     };
+//     console.log(attendaceList)
+//     AttendaceListView()
+// };
+
