@@ -59,6 +59,16 @@
             display: flex;
             justify-content: space-between;
         }
+
+        .이응>div>div {
+            margin: 10px;
+            align-items: center;
+        }
+
+        .이응 input {
+            height: 30px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
@@ -70,7 +80,7 @@
                     src="https://pbs.twimg.com/media/Gu5KDf8WgAAGjG5?format=png&name=900x900">
                 <div id="menuBar" class=" col-9 container row">
 
-                    <a href="" role="button" class="btn btn-outline-dark col-3 menubutton">근태이력</a>
+                    <a href="" role="button" class="btn btn-outline-dark col-5 menubutton">사원정보·근태이력</a>
 
                 </div>
             </div>
@@ -78,16 +88,31 @@
 
         <div id="main" class="container"> <!--main-->
             <div class="content"><!--content1-->
-                <h4>사용자 정보</h4>
+                <h4>사원 정보</h4>
                 <div class="이응">
                     <div> <!--사원 정보-->
-                        사번 <input class="employee" type="text" disabled /> <br />
-                        이름 <input class="staffname" disabled /> <!--이름~부서 변경 불가 disabled-->
-                        생년월일 <input class="birthdate" disabled />
-                        직급 <input class="position" disabled /> <br />
-                        부서 <input class="post" disabled />
-                        이메일 <input class="email" type="text" disabled/>
-                        연락처 <input class="phonenum" type="text" disabled/>
+                        <div class="row">
+                            <div class="col-4">사번</div> <input class="employee col-8" type="text" disabled />
+                        </div>
+                        <div class="row">
+                            <div class="col-4">이름</div> <input class="staffname col-8" type="text" disabled />
+                            <!--이름~부서 변경 불가 disabled-->
+                        </div>
+                        <div class="row">
+                            <div class="col-4">생년월일</div> <input class="birthdate col-8" type="text" disabled />
+                        </div>
+                        <div class="row">
+                            <div class="col-4">직급</div> <input class="position col-8" type="text" disabled />
+                        </div>
+                        <div class="row">
+                            <div class="col-4">부서</div> <input class="post col-8" type="text" disabled />
+                        </div>
+                        <div class="row">
+                            <div class="col-4">이메일</div> <input class="email col-8" type="text" disabled />
+                        </div>
+                        <div class="row">
+                            <div class="col-4">연락처</div> <input class="phonenum col-8" type="text" disabled />
+                        </div>
                     </div>
                     <div>
                         <img src="bono.png" />
@@ -95,32 +120,22 @@
                 </div>
             </div><!--content1 end-->
             <div class="content"> <!--content2-->
-                <h4>사용자 목록</h4>
+                <h4>근태 이력</h4>
                 <div>
-                    <table>
+                    <table class="table table-striped ">
                         <thead>
                             <tr>
-                                <th>사번</th>
-                                <th>이름</th>
-                                <th>생년월일</th>
-                                <th>직급</th>
-                                <th>부서</th>
-                                <th>연락처</th>
-                                <th>이메일</th>
-                                <th>비고</th>
+                                <th scope="col">날짜</th>
+                                <th scope="col">출근시간</th>
+                                <th scope="col">퇴근시간</th>
+                                <th scope="col">비고</th>
                             </tr>
                         </thead>
-                        <tbody class="attendance">
+                        <tbody class=" table-group-divider attendanceTable">
                             <tr>
                                 <td>50001</td>
                                 <td>김지훈</td>
                                 <td>9999년99월99일</td>
-                                <td>영업부</td>
-                                <td>이사</td>
-                                <td>010-1234-5678</td>
-                                <td>jh.kim@example.com</td>
-                                <td><button onclick="gotowork()" class="goworkbtn">출근</button></td>
-                                <td><button class="leaveworkbtn">칼퇴</button></td> <!-- leaveforwork -->
                             </tr>
                         </tbody>
                     </table>
@@ -129,10 +144,8 @@
         </div><!--main end-->
     </div> <!--wrap end-->
 
-    <script src="../00_참고/localStorage_table.js"></script>
-    <script src="login.js"></script>
-
-
+    <script src="../../00_참고/localStorage_table.js"></script>
+    <script src="attendMember_ong.js"></script>
 
 
     <!-- 부트스트랩 스크립트 -->

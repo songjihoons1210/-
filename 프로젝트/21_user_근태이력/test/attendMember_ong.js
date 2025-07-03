@@ -1,6 +1,6 @@
 
 function getmemberList() {
-   
+
     let memberList = localStorage.getItem('memberList');
     if (memberList == null) {
         memberList = [];
@@ -15,21 +15,21 @@ function setmemberList(memberList) {
 }
 
 usercode();
-function usercode() { 
+function usercode() {
     //가져오기
     const url = new URLSearchParams(location.search);
     const employee = url.get('memberID');
     let memberList = getmemberList();
-    for(let i = 0; i<=memberList.length-1; i++){
+    for (let i = 0; i <= memberList.length - 1; i++) {
         const member = memberList[i];
-        if(member.memberID == employee) {
+        if (member.memberID == employee) {
             document.querySelector('.employee').value = member.memberID;
             document.querySelector('.staffname').value = member.Name;
             document.querySelector('.birthdate').value = member.Birthday;
-            document.querySelector('.position').value = member.posiID;
-            document.querySelector('.post').value = member.departID;
+            document.querySelector('.position').value = changePositionName(member.posiID);
+            document.querySelector('.post').value = changeDepartName(member.departID);
             document.querySelector('.email').value = member.Email;
-            document.querySelector('.phonenum').value = member.call;
+            document.querySelector('.phonenum').value = member.Call;
             break;
         }
     }
@@ -69,25 +69,85 @@ function usercode() {
     attendMem();
 }
 
-function attendMem() {
-    const attendance = document.querySelector('.attendance');
-    const memberList = getmemberList();
-    let html = [];
-    for (let i = 0; i < memberList.length; i++) {
-        const membersList = memberList[i];
-        html += `<tr>
-                                <td>${membersList.employee}</td>
-                                <td>${membersList.staffname}</td>
-                                <td>${membersList.birthdate}</td>
-                                <td>${membersList.position}</td>
-                                <td>${membersList.post}}</td>
-                                <td>${membersList.phonenum}</td>
-                                <td>${membersList.email}</td>
-                                <td><button onclick="gotowork()" class="goworkbtn">출근</button></td>
-                                <td><button class="leaveworkbtn" onclick="leaveforwork()">칼퇴</button></td>
-                            </tr>`
-        // 로그인 기록 가져와야함 출퇴근해야하니  
-    };
-    attendance.innerHTML = html;
 
+
+
+function attendMem() {
+    const url = new URLSearchParams(location.search);
+    const employee = url.get('memberID');
+    console.log(employee)
+
+    const attendanceTable = document.querySelector('.attendanceTable');
+    const attendaceList = getAttendaceList();
+    let html = ``;
+
+    for (let i = attendaceList.length - 1; i >= 0; i--) {
+        const attendace = attendaceList[i];
+
+        if (attendace.memberID == employee) {
+            html += `<tr>
+                                <td>${attendace.date}</td>
+                                <td>${attendace.attentTime}</td>
+                                <td>${attendace.leaveTime}</td>
+                                <td>${lateness(attendace.attentTime)} ${absence(attendace.attentTime)}</td>
+                            </tr>`
+            // 로그인 기록 가져와야함 출퇴근해야하니  
+        };
+    }
+    attendanceTable.innerHTML = html;
+}
+
+
+
+
+// 1.3. 직급id <-> 직급 이름 변환 함수
+function changePositionName(input) {
+    const positionList = getPositionList();
+    let posi = '';
+    for (let i = 0; i < positionList.length; i++) {
+        let position = positionList[i];
+        if (position.posiID == input) {
+            posi = position.posiName
+        }
+        else if (position.posiName == input) {
+            posi = position.posiID
+        };
+    };
+    return posi
+};
+
+// 2.3. 부서id <-> 부서 이름 변환 함수
+function changeDepartName(input) {
+    const departmentList = getDepartmentList()
+    let dapart = '';
+    for (let i = 0; i < departmentList.length; i++) {
+        let department = departmentList[i];
+        if (department.departID == input) {
+            dapart = department.departName
+        }
+        else if (department.departName == input) {
+            dapart = department.departID
+        };
+    };
+    return dapart
+};
+
+// 지각여부 판단 함수
+function lateness(attentTime) {
+    let lateness = ''
+    if (attentTime > "09:10") {
+        lateness = '지각'
+    } else {
+        lateness = ''
+    }
+    return lateness
+};
+
+// 결근여부 판단 함수
+function absence(attentTime) {
+    let absence = ''
+    if (attentTime == '') {
+        absence = "결근";
+    }
+    return absence
 }
