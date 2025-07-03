@@ -69,3 +69,25 @@ function usercode() {
     attendMem();
 }
 
+function attendMem() {
+    const attendance = document.querySelector('.attendance');
+    const memberList = getmemberList();
+    let html = [];
+    for (let i = 0; i < memberList.length; i++) {
+        const membersList = memberList[i];
+        html += `<tr>
+                                <td>${membersList.employee}</td>
+                                <td>${membersList.staffname}</td>
+                                <td>${membersList.birthdate}</td>
+                                <td>${membersList.position}</td>
+                                <td>${membersList.post}}</td>
+                                <td>${membersList.phonenum}</td>
+                                <td>${membersList.email}</td>
+                                <td><button onclick="gotowork()" class="goworkbtn">출근</button></td>
+                                <td><button class="leaveworkbtn" onclick="leaveforwork()">칼퇴</button></td>
+                            </tr>`
+        // 로그인 기록 가져와야함 출퇴근해야하니  
+    };
+    attendance.innerHTML = html;
+
+}
