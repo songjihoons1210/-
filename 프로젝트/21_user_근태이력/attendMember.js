@@ -1,7 +1,6 @@
 let employee = JSON.parse(localStorage.getItem('login_memberID'))
-
-
 function getmemberList() {
+    
 
 
     let memberList = localStorage.getItem('memberList');
@@ -19,12 +18,10 @@ function setmemberList(memberList) {
 
 usercode();
 function usercode() {
-function usercode() {
     //가져오기
     // const url = new URLSearchParams(location.search);
     // const employee = url.get('memberID');
     let memberList = getmemberList();
-    for (let i = 0; i < memberList.length; i++) {
     for (let i = 0; i < memberList.length; i++) {
         const member = memberList[i];
         if (member.memberID == employee) {
@@ -42,7 +39,7 @@ function usercode() {
             break;
         }
     }
-}
+}}
 
 attendMem();
 function attendMem() {
@@ -96,14 +93,14 @@ function gotowork() {
     // 객체를 뽑아와서 
     // 정의된 시간변수를 객체에 집어 넣는다
 
-    let attendace = getAttendaceList();
+    let attendaceList = getAttendaceList();
     for (let i = 0; i < attendaceList.length; i++) {
-        attendace = attendaceList[i];
-        // console.log(attendace.attentTime);
+        let attendace = attendaceList[i];
+        console.log(attendace.attentTime);
 
         if (employee == attendace.memberID && attendace.date == equals) {
             if (attendace.attentTime == "") {
-                console.log(attendace)
+                console.log(attendace);
                 attendace.attentTime = time
                 console.log(attendace);
                 setAttendaceList(attendaceList);
@@ -118,6 +115,56 @@ function gotowork() {
 
     }
 }
+
+function leave() {
+    console.log('퇴근');
+    // const url = new URLSearchParams(location.search);
+    // const employee = Number(url.get('memberID'));
+    console.log(employee)
+
+    let year = new Date().getFullYear(); // 연도 구함
+    let month = new Date().getMonth() + 1; // 달
+    month = month < 10 ? `0${month}` : month; //한자리수면 0붙여서 10< 이런식
+    let day = new Date().getDate(); // 일 반환
+    day = day < 10 ? `0${day}` : day;    //한자리수면 0붙여서 10< 이런식
+    let equals = `${year}-${month}-${day}`; // 달 12년-12-월-12일
+    console.log(employee);
+
+    // 시간 변수 정의
+    let hour = new Date().getHours();        // '시' 반환
+    hour = hour < 10 ? `0${hour}` : hour;
+    let munute = new Date().getMinutes();    // '분' 반환
+    munute = munute < 10 ? `0${munute}` : munute;
+    let time = `${hour}:${munute}`;
+    //console.log(time);
+    // for문 돌려
+    // memberID 일치하니? attendList.attenetTime == equal  and
+    // 객체를 뽑아와서 
+    // 정의된 시간변수를 객체에 집어 넣는다
+
+    let attendaceList = getAttendaceList();
+    for (let i = 0; i < attendaceList.length; i++) {
+        let attendace = attendaceList[i];
+         console.log(attendace.leaveTime);
+
+        if (employee == attendace.memberID && attendace.date == equals) {
+            if (attendace.leaveTime == "") {
+                console.log(attendace);
+                attendace.leaveTime = time
+                console.log(attendace);
+                setAttendaceList(attendaceList);
+                attendMem();
+                alert('퇴근');
+                return;
+            } else {
+                alert(`퇴근하셨었습니다.`);
+            }
+        }
+
+
+    }
+}
+
 
 
 // 1.3. 직급id <-> 직급 이름 변환 함수
