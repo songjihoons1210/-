@@ -125,7 +125,7 @@ function setHolidayList(holidayList) {
 // 4. 직원 리스트  =======================================
 
 const memberList = [
-    { memberID: 50000, Name: 'admin', Birthday: '2020-03-01', Call: '010-0000-0000', Email: 'exam@example.com', posiID: 10050, departID: 30050, pwd: 'qwer1234' },
+    { memberID: 50000, Name: 'admin', Birthday: '2020-03-01', Call: '010-0000-0000', Email: 'exam@example.com', posiID: 10000, departID: 30000, pwd: 'qwer1234' },
     { memberID: 50001, Name: '김지훈', Birthday: '1986-03-14', Call: '010-2453-6874', Email: 'jh.kim@example.com', posiID: 10003, departID: 30004, pwd: 'a' },
     { memberID: 50002, Name: '이수연', Birthday: '1990-07-22', Call: '010-3384-2091', Email: 'sy.lee@example.com', posiID: 10006, departID: 30001, pwd: '50002a30001' },
     { memberID: 50003, Name: '박민준', Birthday: '1984-01-11', Call: '010-7732-1125', Email: 'mj.park@example.com', posiID: 10001, departID: 30001, pwd: '50003a30001' },
