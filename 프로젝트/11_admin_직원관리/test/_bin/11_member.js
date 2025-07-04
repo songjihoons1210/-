@@ -245,14 +245,6 @@ function updateMember(memberID) {
             return;
         }
     }
-    document.addEventListener('DOMContentLoaded', () => {
-        const logoutBtn = document.querySelector('.btn btn-primary newMember');
-
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', () => {
-            alert('로그아웃 하시겠습니까?');
-            });
-        }
-    });
+    
 }
 
