@@ -845,7 +845,7 @@ function logout() {
     location.href="../01_공통_로그인/login.html"
     localStorage.setItem('login_memberID', JSON.stringify(""));
 }
-// allListRequest()
+//  allListRequest()
 function allListRequest() {
 setPositionList(positionList)
 setDepartmentList(departmentList)
